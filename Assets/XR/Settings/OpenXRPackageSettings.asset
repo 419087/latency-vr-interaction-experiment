@@ -34,11 +34,11 @@ MonoBehaviour:
   m_Name: ViveFacialTracking Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.FacialTracking.ViveFacialTracking
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Facial Tracking
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.facial.tracking
+  openxrExtensionStrings: XR_HTC_facial_tracking
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &-8194085251940318040
@@ -94,11 +94,11 @@ MonoBehaviour:
   m_Name: ViveHandTracking Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.Hand.ViveHandTracking
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Hand Tracking
+  version: 4.0.0
+  featureIdInternal: vive.openxr.feature.hand.tracking
+  openxrExtensionStrings: XR_EXT_hand_tracking
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &-7466418536665938830
@@ -222,11 +222,11 @@ MonoBehaviour:
   m_Name: ViveAnchor Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.Feature.ViveAnchor
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Anchor (Beta)
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.htcanchor
+  openxrExtensionStrings: XR_HTC_anchor XR_EXT_future XR_HTC_anchor_persistence
+  company: HTC
   priority: 0
   required: 0
   enablePersistedAnchor: 1
@@ -285,11 +285,11 @@ MonoBehaviour:
   m_Name: VIVEFocus3Feature Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.VIVEFocus3Feature
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
+  nameUi: VIVE XR Support
+  version: 1.0.0
+  featureIdInternal: com.unity.openxr.feature.vivefocus3
   openxrExtensionStrings: 
-  company: 
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &-5897893385836871533
@@ -305,11 +305,11 @@ MonoBehaviour:
   m_Name: ViveDisplayRefreshRate Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.DisplayRefreshRate.ViveDisplayRefreshRate
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Display Refresh Rate
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.displayrefreshrate
+  openxrExtensionStrings: XR_FB_display_refresh_rate
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &-5805677990537989674
@@ -398,11 +398,11 @@ MonoBehaviour:
   m_Name: ViveXRTracker Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.Tracker.ViveXRTracker
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Tracker (Beta)
+  version: 1.0.6
+  featureIdInternal: vive.openxr.feature.xrtracker
+  openxrExtensionStrings: XR_HTC_vive_xr_tracker_interaction
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &-5209634218467018061
@@ -418,11 +418,11 @@ MonoBehaviour:
   m_Name: ViveCompositionLayerCylinder Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.CompositionLayer.ViveCompositionLayerCylinder
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Composition Layer (Cylinder)
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.compositionlayer.cylinder
+  openxrExtensionStrings: XR_KHR_composition_layer_cylinder
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &-5105802209968467795
@@ -480,11 +480,11 @@ MonoBehaviour:
   m_Name: VIVEFocus3Profile Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.VIVEFocus3Profile
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE Focus 3 Controller Interaction
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.focus3controller
+  openxrExtensionStrings: XR_HTC_vive_focus3_controller_interaction
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &-4504401286765365123
@@ -500,11 +500,11 @@ MonoBehaviour:
   m_Name: ViveFirstPersonObserver Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.FirstPersonObserver.ViveFirstPersonObserver
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: XR MSFT First Person Observer
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.firstpersonobserver
+  openxrExtensionStrings: XR_MSFT_first_person_observer
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &-4305388038858701130
@@ -587,11 +587,11 @@ MonoBehaviour:
   m_Name: ViveCompositionLayerEquirect Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.CompositionLayer.ViveCompositionLayerEquirect
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Composition Layer (Equirect)
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.compositionlayer.equirect
+  openxrExtensionStrings: XR_KHR_composition_layer_equirect XR_KHR_composition_layer_equirect2
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &-3967795415311767077
@@ -607,22 +607,6 @@ MonoBehaviour:
   m_Name: Standalone
   m_EditorClassIdentifier: Unity.XR.OpenXR::UnityEngine.XR.OpenXR.OpenXRSettings
   features:
-  - {fileID: 1635119167122804412}
-  - {fileID: -8194085251940318040}
-  - {fileID: -6320928315115878160}
-  - {fileID: -5805677990537989674}
-  - {fileID: -7580318331372885155}
-  - {fileID: -4008415791144364392}
-  - {fileID: -2014419977707012715}
-  - {fileID: -6843136866979955139}
-  - {fileID: -5986542355547330873}
-  - {fileID: 2720051865472984339}
-  - {fileID: 396300675363395618}
-  - {fileID: -3932925293826987167}
-  - {fileID: -333583949015671984}
-  - {fileID: 2882170103351851515}
-  - {fileID: -5400921953077774368}
-  - {fileID: 4447277452134347425}
   - {fileID: 6675551502287507894}
   - {fileID: 2623401352913559264}
   - {fileID: -2371448336172135882}
@@ -631,6 +615,7 @@ MonoBehaviour:
   - {fileID: 4047272421274331596}
   - {fileID: 6278140601172151750}
   - {fileID: 2332918470189489811}
+  - {fileID: -8194085251940318040}
   - {fileID: -1252770404530576810}
   - {fileID: 3439270582754107539}
   - {fileID: 2235844168075829440}
@@ -641,6 +626,21 @@ MonoBehaviour:
   - {fileID: -7466418536665938830}
   - {fileID: -6568161053660950968}
   - {fileID: -4775910151011153436}
+  - {fileID: 4447277452134347425}
+  - {fileID: -7580318331372885155}
+  - {fileID: -2014419977707012715}
+  - {fileID: 396300675363395618}
+  - {fileID: 2882170103351851515}
+  - {fileID: -5986542355547330873}
+  - {fileID: -333583949015671984}
+  - {fileID: -4008415791144364392}
+  - {fileID: -3932925293826987167}
+  - {fileID: -6843136866979955139}
+  - {fileID: -5805677990537989674}
+  - {fileID: 2720051865472984339}
+  - {fileID: -6320928315115878160}
+  - {fileID: 1635119167122804412}
+  - {fileID: -5400921953077774368}
   - {fileID: 1652315788393341705}
   m_renderMode: 1
   m_latencyOptimization: 0
@@ -709,11 +709,11 @@ MonoBehaviour:
   m_Name: ViveHandInteractionExt Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.Hand.ViveHandInteractionExt
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Hand Interaction Ext (Deprecated)
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.hand.interaction.ext
+  openxrExtensionStrings: XR_EXT_hand_interaction
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &-2767725627770794798
@@ -729,11 +729,11 @@ MonoBehaviour:
   m_Name: ViveCompositionLayerExtraSettings Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.CompositionLayer.ViveCompositionLayerExtraSettings
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Composition Layer (Extra Settings) (Beta)
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.compositionlayer.extrasettings
+  openxrExtensionStrings: XR_HTC_composition_layer_extra_settings
+  company: HTC
   priority: 0
   required: 0
   SettingsEditorEnableSharpening: 0
@@ -956,11 +956,11 @@ MonoBehaviour:
   m_Name: ViveHandInteraction Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.Hand.ViveHandInteraction
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Hand Interaction
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.hand.interaction
+  openxrExtensionStrings: XR_HTC_hand_interaction
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &735682916382651658
@@ -996,11 +996,11 @@ MonoBehaviour:
   m_Name: ViveSecondaryViewConfiguration Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.SecondaryViewConfiguration.ViveSecondaryViewConfiguration
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Spectator Camera (Beta)
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.secondaryviewconfiguration
+  openxrExtensionStrings: XR_MSFT_secondary_view_configuration
+  company: HTC
   priority: 0
   required: 0
   <IsAllowSpectatorCameraCapture360Image>k__BackingField: 0
@@ -1060,11 +1060,11 @@ MonoBehaviour:
   m_Name: ViveFoveation Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.ViveFoveation
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Foveation
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.foveation
+  openxrExtensionStrings: XR_HTC_foveation
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &1619515955882806099
@@ -1080,11 +1080,11 @@ MonoBehaviour:
   m_Name: ViveInteractions Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.Interaction.ViveInteractions
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
+  nameUi: VIVE XR - Interaction Group
+  version: 2.5.0
+  featureIdInternal: vive.openxr.feature.interactions
   openxrExtensionStrings: 
-  company: 
+  company: HTC
   priority: 0
   required: 0
   m_ViveHandInteraction: 0
@@ -1184,11 +1184,11 @@ MonoBehaviour:
   m_Name: VivePathEnumeration Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.VivePathEnumeration
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Path Enumeration (Beta)
+  version: 1.0.6
+  featureIdInternal: vive.wave.openxr.feature.pathenumeration
+  openxrExtensionStrings: XR_HTC_path_enumeration
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &2332918470189489811
@@ -1317,11 +1317,11 @@ MonoBehaviour:
   m_Name: ViveCompositionLayer Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.CompositionLayer.ViveCompositionLayer
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
+  nameUi: VIVE XR Composition Layer
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.compositionlayer
   openxrExtensionStrings: 
-  company: 
+  company: HTC
   priority: 0
   required: 0
   enableAutoFallback: 0
@@ -1358,11 +1358,11 @@ MonoBehaviour:
   m_Name: VivePassthrough Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.Passthrough.VivePassthrough
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Passthrough
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.passthrough
+  openxrExtensionStrings: XR_HTC_passthrough XR_HTC_passthrough_configuration
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &4047272421274331596
@@ -1418,11 +1418,11 @@ MonoBehaviour:
   m_Name: ViveCompositionLayerPassthrough Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.CompositionLayer.Passthrough.ViveCompositionLayerPassthrough
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Composition Layer (Passthrough) (Deprecated)
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.compositionlayer.passthrough
+  openxrExtensionStrings: XR_HTC_passthrough
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &5223924662788429561
@@ -1438,11 +1438,11 @@ MonoBehaviour:
   m_Name: ViveEyeTracker Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.EyeTracker.ViveEyeTracker
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Eye Tracker (Beta)
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.eye.tracker
+  openxrExtensionStrings: XR_HTC_eye_tracker
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &5484049083330302353
@@ -1478,11 +1478,11 @@ MonoBehaviour:
   m_Name: ViveUserPresence Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.UserPresence.ViveUserPresence
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR User Presence
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.userpresence
+  openxrExtensionStrings: XR_EXT_user_presence
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &6155725091580658112
@@ -1555,6 +1555,33 @@ MonoBehaviour:
   - {fileID: 1291768944533826841}
   - {fileID: 3062173591152274764}
   - {fileID: -5105802209968467795}
+  - {fileID: -4511840959376470297}
+  - {fileID: 1619515955882806099}
+  - {fileID: -6038370313921007911}
+  - {fileID: 3388164880165900871}
+  - {fileID: 7407934817077794216}
+  - {fileID: -5209634218467018061}
+  - {fileID: -3984285796754881632}
+  - {fileID: -2767725627770794798}
+  - {fileID: 4486856617045228396}
+  - {fileID: -5897893385836871533}
+  - {fileID: 8409442044645509901}
+  - {fileID: 5223924662788429561}
+  - {fileID: -8493021528286124721}
+  - {fileID: 1401309366941760301}
+  - {fileID: 7356084410264396465}
+  - {fileID: 574514019049095278}
+  - {fileID: -3275272510410633513}
+  - {fileID: -7512747364228733874}
+  - {fileID: 3606290096660709744}
+  - {fileID: 2238249359769315881}
+  - {fileID: 6562166136671161208}
+  - {fileID: 1057095977446893913}
+  - {fileID: -5959318362336984039}
+  - {fileID: -5285216783775696563}
+  - {fileID: 6133852833081877051}
+  - {fileID: 7142569436634170430}
+  - {fileID: -4504401286765365123}
   - {fileID: 8967226355589635929}
   m_renderMode: 1
   m_latencyOptimization: 0
@@ -1583,11 +1610,11 @@ MonoBehaviour:
   m_Name: VivePlaneDetection Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.PlaneDetection.VivePlaneDetection
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR PlaneDetection
+  version: 1.0.0
+  featureIdInternal: vive.wave.openxr.feature.planedetection
+  openxrExtensionStrings: XR_EXT_plane_detection
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &6675551502287507894
@@ -1643,11 +1670,11 @@ MonoBehaviour:
   m_Name: ViveWristTracker Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.Tracker.ViveWristTracker
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Wrist Tracker
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.tracker
+  openxrExtensionStrings: XR_HTC_vive_wrist_tracker_interaction
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &7356084410264396465
@@ -1663,11 +1690,11 @@ MonoBehaviour:
   m_Name: ViveFrameSynchronization Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.FrameSynchronization.ViveFrameSynchronization
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Frame Synchronization (Beta)
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.framesynchronization
+  openxrExtensionStrings: XR_HTC_frame_synchronization
+  company: HTC
   priority: 0
   required: 0
   m_SynchronizationMode: 1
@@ -1684,11 +1711,11 @@ MonoBehaviour:
   m_Name: ViveCompositionLayerColorScaleBias Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.CompositionLayer.ViveCompositionLayerColorScaleBias
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Composition Layer (Color Scale Bias)
+  version: 1.0.0
+  featureIdInternal: vive.openxr.feature.compositionlayer.colorscalebias
+  openxrExtensionStrings: XR_KHR_composition_layer_color_scale_bias
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &7955384410373441441
@@ -1745,11 +1772,11 @@ MonoBehaviour:
   m_Name: ViveEnterpriseCommand Android
   m_EditorClassIdentifier: VIVE.OpenXR::VIVE.OpenXR.Enterprise.ViveEnterpriseCommand
   m_enabled: 0
-  nameUi: 
-  version: 
-  featureIdInternal: 
-  openxrExtensionStrings: 
-  company: 
+  nameUi: VIVE XR Enterprise Command
+  version: 0.1
+  featureIdInternal: vive.openxr.feature.enterprise.command
+  openxrExtensionStrings: XR_HTC_enterprise_command
+  company: HTC
   priority: 0
   required: 0
 --- !u!114 &8844578415833563940
