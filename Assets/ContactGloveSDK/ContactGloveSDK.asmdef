@@ -1,0 +1,18 @@
+{
+    "name": "ContactGloveSDK",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e8063cf3a345f9c46b7c7c4f14d54285",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:1fbf338ef6b952a448262a7ff7df5fe4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
