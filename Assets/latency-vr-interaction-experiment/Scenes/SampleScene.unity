@@ -204,9 +204,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d298b0dace18cb1499ee2927ab786d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VRRigFollower
-  target: {fileID: 1067380162}
-  positionOffset: {x: 0, y: 0, z: 0}
-  rotationOffset: {x: 90, y: 180, z: -90}
+  _target: {fileID: 1067380162}
+  _positionOffset: {x: 0, y: 0, z: 0}
+  _rotationOffset: {x: 90, y: 180, z: -90}
 --- !u!1 &234253574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1141,9 +1141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d298b0dace18cb1499ee2927ab786d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VRRigFollower
-  target: {fileID: 1003652599}
-  positionOffset: {x: 0, y: 0, z: 0}
-  rotationOffset: {x: -90, y: 180, z: -90}
+  _target: {fileID: 1003652599}
+  _positionOffset: {x: 0, y: 0, z: 0}
+  _rotationOffset: {x: -90, y: 180, z: -90}
 --- !u!4 &1622328569 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6872619405049854328, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
@@ -1410,7 +1410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59f217ada0fe7864dbe7c6c4e0f47267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AvatarRootFollower
-  cameraTarget: {fileID: 896251575}
+  _cameraTarget: {fileID: 896251575}
 --- !u!1 &1922635158
 GameObject:
   m_ObjectHideFlags: 0
