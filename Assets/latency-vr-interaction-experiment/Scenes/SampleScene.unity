@@ -1075,8 +1075,10 @@ MonoBehaviour:
       _distalJointData:
         _jointType: 14
         _joint: {fileID: 2006322552}
-  rotationAxis: {x: 0, y: 0, z: 1}
-  maxRotationAngle: 80
+  _rotationAxis: {x: 0, y: 0, z: 1}
+  _thumbRotationAxis: {x: 0, y: -1, z: 0}
+  _maxRotationAngle: 80
+  _thumbRotationAngle: 40
 --- !u!4 &1525895983
 Transform:
   m_ObjectHideFlags: 0
