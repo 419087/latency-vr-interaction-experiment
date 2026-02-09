@@ -8,6 +8,8 @@ using Unity.Multiplayer.Playmode;
 
 public class NetworkBootstrapper : MonoBehaviour
 {
+    [SerializeField] private GameObject _connectionManager;
+
     void Start()
     {
 #if UNITY_EDITOR
@@ -16,12 +18,10 @@ public class NetworkBootstrapper : MonoBehaviour
 
         if (tags.Contains("Server"))
         {
-            Debug.Log("MPPM [Server]: サーバーとして起動します");
             InitializeDedicatedServer();
         }
         else if (tags.Contains("Client"))
         {
-            Debug.Log("MPPM [Client]: クライアントとして起動します");
             InitializeClientGame();
         }
         else
@@ -40,6 +40,9 @@ public class NetworkBootstrapper : MonoBehaviour
     // サーバー用の初期化
     private void InitializeDedicatedServer()
     {
+        Debug.Log("MPPM [Server]: サーバーとして起動します");
+        Instantiate(_connectionManager);
+
         // サーバー固有の設定（フレームレート制限など）
         Application.targetFrameRate = 30;
 
@@ -50,6 +53,7 @@ public class NetworkBootstrapper : MonoBehaviour
     // クライアント用の初期化
     private void InitializeClientGame()
     {
+        Debug.Log("MPPM [Client]: クライアントとして起動します");
         // クライアント固有の設定
         Application.targetFrameRate = 60;
 
