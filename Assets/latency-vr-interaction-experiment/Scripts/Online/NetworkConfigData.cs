@@ -1,10 +1,10 @@
 using UnityEngine;
 public class NetworkConfigData
 {
-    public readonly GameObject PlayerPrefab;
-    public readonly int MaxClients;
+    public PlayerInitializer PlayerPrefab { get; }
+    public int MaxClients { get; }
 
-    public NetworkConfigData(GameObject playerPrefab, int maxClients)
+    public NetworkConfigData(PlayerInitializer playerPrefab, int maxClients)
     {
         PlayerPrefab = playerPrefab;
         MaxClients = maxClients;

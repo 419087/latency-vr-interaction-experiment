@@ -6,7 +6,7 @@ public class PlayerSpawner
     private readonly GameObject _playerPrefab;
     public PlayerSpawner(NetworkConfigData config)
     {
-        _playerPrefab = config.PlayerPrefab;
+        _playerPrefab = config.PlayerPrefab.gameObject;
     }
 
     public void SpawnPlayerForClient(ulong clientId)
