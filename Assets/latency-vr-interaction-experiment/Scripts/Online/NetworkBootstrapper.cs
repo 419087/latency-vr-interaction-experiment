@@ -1,19 +1,31 @@
 using UnityEngine;
 using Unity.Netcode;
 using System.Linq;
+using VContainer;
+using VContainer.Unity;
 
 #if UNITY_EDITOR
 using Unity.Multiplayer.Playmode;
 #endif
 
-public class NetworkBootstrapper : MonoBehaviour
+public class NetworkBootstrapper : IStartable
 {
-    [SerializeField] private GameObject _connectionManager;
 
-    void Start()
+    private readonly NetworkManager _networkManager;
+    private readonly ConnectionManager _connectionManager;
+
+    [Inject]
+    public NetworkBootstrapper(
+        NetworkManager networkManager, 
+        ConnectionManager connectionManager)
+    {
+        _networkManager = networkManager;
+        _connectionManager = connectionManager;
+    }
+
+    public void Start()
     {
 #if UNITY_EDITOR
-        // MPPM経由で起動しているか確認
         var tags = CurrentPlayer.ReadOnlyTags();
 
         if (tags.Contains("Server"))
@@ -26,10 +38,8 @@ public class NetworkBootstrapper : MonoBehaviour
         }
         else
         {
-            // MPPMを使っていない、またはServer/Clientのタグがないときの挙動
             Debug.Log("ネットワークを使わずに起動します");
         }
-
 #elif UNITY_SERVER
         InitializeDedicatedServer();
 #else
@@ -37,28 +47,20 @@ public class NetworkBootstrapper : MonoBehaviour
 #endif
     }
 
-    // サーバー用の初期化
     private void InitializeDedicatedServer()
     {
-        Debug.Log("MPPM [Server]: サーバーとして起動します");
-        Instantiate(_connectionManager);
-        _connectionManager.GetComponent<ConnectionManager>().InitializeConnectionManager();
+        Debug.Log("VContainer [Server]: サーバーとして起動します");
+        
+        _connectionManager.InitializeConnectionManager();
 
-        // サーバー固有の設定（フレームレート制限など）
         Application.targetFrameRate = 30;
-
-        // サーバーとして起動
-        NetworkManager.Singleton.StartServer();
+        _networkManager.StartServer();
     }
 
-    // クライアント用の初期化
     private void InitializeClientGame()
     {
-        Debug.Log("MPPM [Client]: クライアントとして起動します");
-        // クライアント固有の設定
+        Debug.Log("VContainer [Client]: クライアントとして起動します");
         Application.targetFrameRate = 60;
-
-        // クライアントとして接続
-        NetworkManager.Singleton.StartClient();
+        _networkManager.StartClient();
     }
 }

@@ -1,44 +1,50 @@
 using Unity.Netcode;
 using UnityEngine;
+using VContainer;
 
 // サーバー側での接続管理とプレイヤースポーンを担当するクラス
 public class ConnectionManager : MonoBehaviour
 {
-    [SerializeField] private int _maxClients = 2;
-    [SerializeField] private GameObject _playerPrefab;
+    private NetworkConfigData _config;
+    private NetworkManager _networkManager;
+    private PlayerSpawner _playerSpawner;
 
     private int _currentClientCount = 0;
 
-    private PlayerSpawner _playerSpawner;
+    [Inject]
+    public void Construct(NetworkManager networkManager, NetworkConfigData config, PlayerSpawner playerSpawner)
+    {
+        _networkManager = networkManager;
+        _config = config;
+        _playerSpawner = playerSpawner;
+    }
 
     public void InitializeConnectionManager()
     {
-        _playerSpawner = new PlayerSpawner(_playerPrefab);
-
-        if (NetworkManager.Singleton != null)
+        if (_networkManager != null)
         {
             // 接続承認のコールバック
-            NetworkManager.Singleton.ConnectionApprovalCallback = ApprovalCheck;
+            _networkManager.ConnectionApprovalCallback = ApprovalCheck;
             // 承認が完了し、接続が確立された後にスポーンさせるためのコールバック
-            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+            _networkManager.OnClientConnectedCallback += OnClientConnected;
+            _networkManager.OnClientDisconnectCallback += OnClientDisconnected;
         }
     }
 
     private void OnDestroy()
     {
-        if (NetworkManager.Singleton != null)
+        if (_networkManager != null)
         {
-            NetworkManager.Singleton.ConnectionApprovalCallback = null;
-            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
-            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
+            _networkManager.ConnectionApprovalCallback = null;
+            _networkManager.OnClientConnectedCallback -= OnClientConnected;
+            _networkManager.OnClientDisconnectCallback -= OnClientDisconnected;
         }
     }
 
     // 接続数がmaxClients未満の場合のみ承認する(サーバーを除く)
     private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
     {
-        Debug.Log($"接続可能か確認: 現在の接続数 {_currentClientCount} / 最大接続数 {_maxClients}");
+        Debug.Log($"接続可能か確認: 現在の接続数 {_currentClientCount} / 最大接続数 {_config.MaxClients}");
 
         // サーバー自身の接続は無条件で通し、カウントもしない
         if (request.ClientNetworkId == NetworkManager.ServerClientId)
@@ -49,7 +55,7 @@ public class ConnectionManager : MonoBehaviour
             return;
         }
 
-        if (_currentClientCount < _maxClients)
+        if (_currentClientCount < _config.MaxClients)
         {
             _currentClientCount++;
 
@@ -60,7 +66,7 @@ public class ConnectionManager : MonoBehaviour
         else
         {
             response.Approved = false;
-            response.Reason = $"最大{_maxClients}人までしか接続できません。";
+            response.Reason = $"最大{_config.MaxClients}人までしか接続できません。";
         }
 
         response.Pending = false;
