@@ -3,16 +3,15 @@ using Unity.Netcode;
 
 public class PlayerSpawner
 {
-    private GameObject _playerPrefab; // 生成するアバターのプレハブ
-
-    public PlayerSpawner(GameObject playerPrefab)
+    private readonly GameObject _playerPrefab;
+    public PlayerSpawner(NetworkConfigData config)
     {
-        _playerPrefab = playerPrefab;
+        _playerPrefab = config.PlayerPrefab;
     }
 
     public void SpawnPlayerForClient(ulong clientId)
     {
-        Vector3 spawnPos = new Vector3(clientId * 2.0f, 0, 0); 
+        Vector3 spawnPos = new Vector3(clientId * 2.0f, 0, 0);
         GameObject playerInstance = Object.Instantiate(_playerPrefab, spawnPos, Quaternion.identity);
 
         NetworkObject netObj = playerInstance.GetComponent<NetworkObject>();
