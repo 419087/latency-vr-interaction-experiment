@@ -42,6 +42,7 @@ public class NetworkBootstrapper : MonoBehaviour
     {
         Debug.Log("MPPM [Server]: サーバーとして起動します");
         Instantiate(_connectionManager);
+        _connectionManager.GetComponent<ConnectionManager>().InitializeConnectionManager();
 
         // サーバー固有の設定（フレームレート制限など）
         Application.targetFrameRate = 30;
