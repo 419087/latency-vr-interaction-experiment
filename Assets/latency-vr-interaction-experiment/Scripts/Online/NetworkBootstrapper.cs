@@ -3,6 +3,8 @@ using Unity.Netcode;
 using System.Linq;
 using VContainer;
 using VContainer.Unity;
+using VIVE.OpenXR;
+
 
 #if UNITY_EDITOR
 using Unity.Multiplayer.Playmode;
@@ -16,7 +18,7 @@ public class NetworkBootstrapper : IStartable
 
     [Inject]
     public NetworkBootstrapper(
-        NetworkManager networkManager, 
+        NetworkManager networkManager,
         ConnectionManager connectionManager)
     {
         _networkManager = networkManager;
@@ -50,11 +52,22 @@ public class NetworkBootstrapper : IStartable
     private void InitializeDedicatedServer()
     {
         Debug.Log("VContainer [Server]: サーバーとして起動します");
-        
+
         _connectionManager.InitializeConnectionManager();
 
         Application.targetFrameRate = 30;
+        CheckScenes();
         _networkManager.StartServer();
+    }
+
+    void CheckScenes()
+    {
+        Debug.Log($"ビルド設定に登録されているシーン:{UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings}");
+        for (int i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings; i++)
+        {
+            string path = UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i);
+            Debug.Log($"Index {i}: {path}");
+        }
     }
 
     private void InitializeClientGame()
