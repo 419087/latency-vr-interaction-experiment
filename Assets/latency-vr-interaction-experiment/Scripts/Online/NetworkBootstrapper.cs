@@ -3,7 +3,7 @@ using Unity.Netcode;
 using System.Linq;
 using VContainer;
 using VContainer.Unity;
-using VIVE.OpenXR;
+using UnityEngine.XR.Management;
 
 
 #if UNITY_EDITOR
@@ -74,6 +74,18 @@ public class NetworkBootstrapper : IStartable
     {
         Debug.Log("VContainer [Client]: クライアントとして起動します");
         Application.targetFrameRate = 60;
+        StopXR();
         _networkManager.StartClient();
     }
+
+    private void StopXR()
+{
+    var xrManager = XRGeneralSettings.Instance.Manager;
+    if (xrManager != null && xrManager.isInitializationComplete)
+    {
+        Debug.Log("XR Subsystems を停止し、Loader を破棄します...");
+        xrManager.StopSubsystems();
+        xrManager.DeinitializeLoader();
+    }
+}
 }
