@@ -57,6 +57,7 @@ public class NetworkBootstrapper : IStartable
 
         Application.targetFrameRate = 30;
         CheckScenes();
+        StopXR();
         _networkManager.StartServer();
     }
 
@@ -74,7 +75,6 @@ public class NetworkBootstrapper : IStartable
     {
         Debug.Log("VContainer [Client]: クライアントとして起動します");
         Application.targetFrameRate = 60;
-        StopXR();
         _networkManager.StartClient();
     }
 

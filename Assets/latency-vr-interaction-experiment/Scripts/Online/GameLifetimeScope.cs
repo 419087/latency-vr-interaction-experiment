@@ -2,17 +2,18 @@ using UnityEngine;
 using Unity.Netcode;
 using VContainer;
 using VContainer.Unity;
-using Unity.VisualScripting;
+using ContactGloveSDK;
 
 public class GameLifetimeScope : LifetimeScope
 {
     [SerializeField] private NetworkManager _networkManager;
     [SerializeField] private ConnectionManager _connectionManagerPrefab;
 
-    [Header("VR Rig Target Settings")]
+    [Header("VR Target Settings")]
     [SerializeField] private CameraMarker _cameraMarker;
     [SerializeField] private LeftControllerMarker _leftControllerMarker;
     [SerializeField] private RightControllerMarker _rightControllerMarker;
+    [SerializeField] private ContactGloveManager _contactGloveManager;
 
 
     [Header("Network Settings")]
@@ -24,7 +25,7 @@ public class GameLifetimeScope : LifetimeScope
     {
         builder.RegisterComponent(_networkManager);
 
-        var vrConfig = new VRConfigData(_cameraMarker, _leftControllerMarker, _rightControllerMarker);
+        var vrConfig = new VRConfigData(_cameraMarker, _leftControllerMarker, _rightControllerMarker, _contactGloveManager);
         builder.RegisterInstance(vrConfig);
 
         var networkConfig = new NetworkConfigData(_playerPrefab, _maxClients);

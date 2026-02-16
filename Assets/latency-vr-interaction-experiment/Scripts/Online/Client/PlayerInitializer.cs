@@ -9,6 +9,7 @@ public class PlayerInitializer : MonoBehaviour, IPlayerPrefabMarker
     [SerializeField] private VRRigFollower _leftVrRigFollower;
     [SerializeField] private VRRigFollower _rightVrRigFollower;
     [SerializeField] private AvatarRootFollower _avatarRootFollower;
+    [SerializeField] private FingerRotator _fingerRotator;
 
     public GameObject GameObject => this.gameObject;
 
@@ -19,6 +20,7 @@ public class PlayerInitializer : MonoBehaviour, IPlayerPrefabMarker
         _leftVrRigFollower.Construct(vrConfig.LeftControllerMarker.transform);
         _rightVrRigFollower.Construct(vrConfig.RightControllerMarker.transform);
         _avatarRootFollower.Construct(vrConfig.CameraMarker.transform);
+        _fingerRotator.Construct(vrConfig.ContactGloveManager);
     }
 
     private void Awake()
