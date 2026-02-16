@@ -2,11 +2,10 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using ContactGloveSDK;
+using Unity.Netcode;
 
-public class FingerRotator : MonoBehaviour
+public class FingerRotator : NetworkBehaviour
 {
-    [SerializeField] private ContactGloveManager _contactGloveManager;
-
     [Header("Hand Settings")]
     [SerializeField] private HandData[] _handData;
 
@@ -17,10 +16,20 @@ public class FingerRotator : MonoBehaviour
     [SerializeField] float _maxRotationAngle = 80f;                // 完全に握った時の角度
     [SerializeField] float _thumbRotationAngle = 40f;      // 親指の基節の最大回転角度
 
+    private ContactGloveManager _contactGloveManager;
+
     private Dictionary<HandSides, List<JointData>> _allJoints; // 「手: その手に属する関節のリスト」という形式の辞書(Startで初期化)
 
+    private List<NetworkVariable<float>> _jointValues = new List<NetworkVariable<float>>();
 
-    void Start()
+    private NetworkVariable<float> _tmp = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); // デバッグ用
+
+    public void Construct(ContactGloveManager contactGloveManager)
+    {
+        _contactGloveManager = contactGloveManager;
+    }
+
+    public void Awake()
     {
         // 全ての関節データを配列にまとめる
         _allJoints = _handData.ToDictionary(
@@ -29,14 +38,19 @@ public class FingerRotator : MonoBehaviour
         );
 
         // 全ての関節の初期回転を保存
-        foreach (var jointData in _allJoints.Values.SelectMany(joints => joints))
+        // さらに、全ての関節に対応するNetworkVariableを作成して保存
+        for (int i = 0; i < _allJoints.Values.SelectMany(joints => joints).Count(); i++)
         {
-            jointData.StoreInitialRotations();
+            JointData jointData = _allJoints.Values.SelectMany(joints => joints).ElementAt(i);
+            var remoteJointValue = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+            _jointValues.Add(remoteJointValue);
+            jointData.Initialize(i);
+            Debug.Log(i + ": " + jointData.JointType); // デバッグ用に初期回転を表示
         }
     }
 
     // Animatorの後に実行される必要があるのでLateUpdateを使用
-    public void LateUpdate()
+    private void LateUpdate()
     {
         // 全ての関節を更新
         foreach (var handEntry in _allJoints)
@@ -46,15 +60,18 @@ public class FingerRotator : MonoBehaviour
 
             foreach (var jointData in jointDatas)
             {
+                if (IsOwner)
+                    GetJointValue(handSide, jointData); // オーナーは関節の回転を取得してNetworkVariableに保存
+
                 UpdateFinger(handSide, jointData);
             }
         }
     }
 
     // 指定した関節データを基に関節を回転させるメソッド
-    public void UpdateFinger(HandSides handSides, JointData jointData)
+    private void UpdateFinger(HandSides handSides, JointData jointData)
     {
-        float curlValue = _contactGloveManager.GetFingerRotationAmplitude(handSides, jointData.JointType);
+        float curlValue = _jointValues[jointData.JointIndex].Value; // NetworkVariableから値を取得
 
         if (jointData.Joint == null)
         {
@@ -83,5 +100,12 @@ public class FingerRotator : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.Euler(rotationAxis * (curlValue * maxRotationAngle));
         jointData.Joint.localRotation = jointData.InitialRotation * targetRotation;
+    }
+
+    private void GetJointValue(HandSides handSides, JointData jointData)
+    {
+        float curlValue = _contactGloveManager.GetFingerRotationAmplitude(handSides, jointData.JointType);
+        Debug.Log(_jointValues[jointData.JointIndex].Value);
+        _jointValues[jointData.JointIndex].Value = curlValue; // NetworkVariableに値を保存
     }
 }

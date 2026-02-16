@@ -177,6 +177,7 @@ MonoBehaviour:
   _cameraMarker: {fileID: 896251581}
   _leftControllerMarker: {fileID: 1003652604}
   _rightControllerMarker: {fileID: 1067380167}
+  _contactGloveManager: {fileID: 1891377347}
   _playerPrefab: {fileID: 694353353183168293, guid: 86c3334eea6ec8d449c485d36b41c0b4, type: 3}
   _maxClients: 2
 --- !u!1 &314139688 stripped
@@ -351,7 +352,7 @@ MonoBehaviour:
   m_MaxConnectAttempts: 60
   m_DisconnectTimeoutMS: 30000
   ConnectionData:
-    Address: 127.0.0.1
+    Address: 10.0.0.199
     Port: 7777
     ServerListenAddress: 0.0.0.0
   DebugSimulator:
@@ -739,158 +740,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1525895981
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1525895983}
-  - component: {fileID: 1525895982}
-  m_Layer: 0
-  m_Name: FingerRotator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1525895982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1525895981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3952fe0a8138c94a94b8a4329735142, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FingerRotator
-  _contactGloveManager: {fileID: 1891377347}
-  _handData:
-  - _handSide: 0
-    _indexFinger:
-      _proximalJointData:
-        _jointType: 9
-        _joint: {fileID: 0}
-      _intermediateJointData:
-        _jointType: 10
-        _joint: {fileID: 0}
-      _distalJointData:
-        _jointType: 11
-        _joint: {fileID: 0}
-    _middleFinger:
-      _proximalJointData:
-        _jointType: 6
-        _joint: {fileID: 0}
-      _intermediateJointData:
-        _jointType: 7
-        _joint: {fileID: 0}
-      _distalJointData:
-        _jointType: 8
-        _joint: {fileID: 0}
-    _ringFinger:
-      _proximalJointData:
-        _jointType: 3
-        _joint: {fileID: 0}
-      _intermediateJointData:
-        _jointType: 4
-        _joint: {fileID: 0}
-      _distalJointData:
-        _jointType: 5
-        _joint: {fileID: 0}
-    _littleFinger:
-      _proximalJointData:
-        _jointType: 0
-        _joint: {fileID: 0}
-      _intermediateJointData:
-        _jointType: 1
-        _joint: {fileID: 0}
-      _distalJointData:
-        _jointType: 2
-        _joint: {fileID: 0}
-    _thumbFinger:
-      _proximalJointData:
-        _jointType: 12
-        _joint: {fileID: 0}
-      _intermediateJointData:
-        _jointType: 13
-        _joint: {fileID: 0}
-      _distalJointData:
-        _jointType: 14
-        _joint: {fileID: 0}
-  - _handSide: 1
-    _indexFinger:
-      _proximalJointData:
-        _jointType: 9
-        _joint: {fileID: 0}
-      _intermediateJointData:
-        _jointType: 10
-        _joint: {fileID: 0}
-      _distalJointData:
-        _jointType: 11
-        _joint: {fileID: 0}
-    _middleFinger:
-      _proximalJointData:
-        _jointType: 6
-        _joint: {fileID: 0}
-      _intermediateJointData:
-        _jointType: 7
-        _joint: {fileID: 0}
-      _distalJointData:
-        _jointType: 8
-        _joint: {fileID: 0}
-    _ringFinger:
-      _proximalJointData:
-        _jointType: 3
-        _joint: {fileID: 0}
-      _intermediateJointData:
-        _jointType: 4
-        _joint: {fileID: 0}
-      _distalJointData:
-        _jointType: 5
-        _joint: {fileID: 0}
-    _littleFinger:
-      _proximalJointData:
-        _jointType: 0
-        _joint: {fileID: 0}
-      _intermediateJointData:
-        _jointType: 1
-        _joint: {fileID: 0}
-      _distalJointData:
-        _jointType: 2
-        _joint: {fileID: 0}
-    _thumbFinger:
-      _proximalJointData:
-        _jointType: 12
-        _joint: {fileID: 0}
-      _intermediateJointData:
-        _jointType: 13
-        _joint: {fileID: 0}
-      _distalJointData:
-        _jointType: 14
-        _joint: {fileID: 0}
-  _rotationAxis: {x: 0, y: 0, z: 1}
-  _thumbRotationAxis: {x: 0, y: -1, z: 0}
-  _maxRotationAngle: 80
-  _thumbRotationAngle: 40
---- !u!4 &1525895983
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1525895981}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1891377346
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,6 +841,5 @@ SceneRoots:
   - {fileID: 756893660}
   - {fileID: 1085716221}
   - {fileID: 1891377348}
-  - {fileID: 1525895983}
   - {fileID: 532440860}
   - {fileID: 62282040}
