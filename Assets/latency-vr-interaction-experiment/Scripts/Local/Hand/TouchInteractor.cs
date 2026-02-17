@@ -6,7 +6,7 @@ public class TouchInteractor : NetworkBehaviour
 {
     [Header("Haptic Settings")]
     [Range(0f, 1f)]
-    [SerializeField] private float _hapticAmplitude = 0.5f;
+    [SerializeField] private float _hapticAmplitude = 1f;
     [SerializeField] private float _hapticDuration = 0.1f;
 
     // コントローラーの振動システムをアサイン
