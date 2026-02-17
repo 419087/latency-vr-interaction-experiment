@@ -21,7 +21,11 @@ public class FingerRotator : NetworkBehaviour
 
     private Dictionary<HandSides, List<JointData>> _allJoints; // 「手: その手に属する関節のリスト」という形式の辞書(Startで初期化)
 
-    private NetworkList<float> _jointValues = new NetworkList<float>();
+    private NetworkList<float> _jointValues = new NetworkList<float>(
+        null, 
+        NetworkVariableReadPermission.Everyone, 
+        NetworkVariableWritePermission.Owner
+    );
 
     private NetworkVariable<float> _tmp = new NetworkVariable<float>(-1f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); // デバッグ用
 
