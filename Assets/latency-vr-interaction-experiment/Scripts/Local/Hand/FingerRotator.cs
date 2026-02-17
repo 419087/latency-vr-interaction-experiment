@@ -105,7 +105,10 @@ public class FingerRotator : NetworkBehaviour
     private void GetJointValue(HandSides handSides, JointData jointData)
     {
         float curlValue = _contactGloveManager.GetFingerRotationAmplitude(handSides, jointData.JointType);
-        Debug.Log(_jointValues[jointData.JointIndex].Value);
+
+        // デバッグ用
+        if (!IsOwner)
+            Debug.Log(_jointValues[jointData.JointIndex].Value);
         _jointValues[jointData.JointIndex].Value = curlValue; // NetworkVariableに値を保存
     }
 }
