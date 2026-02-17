@@ -535,6 +535,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 405711a369286824aa0e6ccf6bc15cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LeftControllerMarker
+  _hapticImpulsePlayer: {fileID: 1003652605}
+--- !u!114 &1003652605 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5967689310316253315, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+  m_PrefabInstance: {fileID: 1085716221}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552329010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b734f2bd29eeddd4d85afb0c266228c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1067380167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,6 +559,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca70e3be6e829e46bead8750039114d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RightControllerMarker
+  _hapticImpulsePlayer: {fileID: 1067380169}
+--- !u!114 &1067380169 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4238984354899526239, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+  m_PrefabInstance: {fileID: 1085716221}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3132754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b734f2bd29eeddd4d85afb0c266228c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1085716221
 PrefabInstance:
   m_ObjectHideFlags: 0

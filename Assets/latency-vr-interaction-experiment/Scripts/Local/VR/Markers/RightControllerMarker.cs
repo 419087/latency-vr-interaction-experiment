@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RightControllerMarker : MonoBehaviour
+public class RightControllerMarker : ControllerMarker
 {
     
 }
