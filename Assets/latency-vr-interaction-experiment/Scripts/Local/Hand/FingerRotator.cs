@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ContactGloveSDK;
 using Unity.Netcode;
+using System;
 
 public class FingerRotator : NetworkBehaviour
 {
@@ -48,7 +49,7 @@ public class FingerRotator : NetworkBehaviour
         }
     }
 
-    private void Start()
+    public override void OnNetworkSpawn()
     {
         _jointValues[0].Value = OwnerClientId; // デバッグ用にオーナーのClientIdをNetworkVariableに保存
     }
@@ -65,7 +66,7 @@ public class FingerRotator : NetworkBehaviour
             foreach (var jointData in jointDatas)
             {
                 if (IsOwner)
-                    // GetJointValue(handSide, jointData); // オーナーは関節の回転を取得してNetworkVariableに保存
+                    GetJointValue(handSide, jointData); // オーナーは関節の回転を取得してNetworkVariableに保存
 
                 UpdateFinger(handSide, jointData);
             }
@@ -79,7 +80,10 @@ public class FingerRotator : NetworkBehaviour
 
         // デバッグ用
         if (!IsOwner)
+        {
+            Debug.Log(OwnerClientId + "オーナーではありません");
             Debug.Log(_jointValues[0].Value);
+        }
 
         if (jointData.Joint == null)
         {
@@ -113,6 +117,7 @@ public class FingerRotator : NetworkBehaviour
     private void GetJointValue(HandSides handSides, JointData jointData)
     {
         float curlValue = _contactGloveManager.GetFingerRotationAmplitude(handSides, jointData.JointType);
-        _jointValues[jointData.JointIndex].Value = curlValue; // NetworkVariableに値を保存
+        DateTime now = DateTime.Now;
+        _jointValues[0].Value = now.Second + now.Millisecond / 1000f; // NetworkVariableに値を保存
     }
 }
