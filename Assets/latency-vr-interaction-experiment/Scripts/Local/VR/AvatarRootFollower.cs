@@ -10,11 +10,6 @@ public class AvatarRootFollower : NetworkBehaviour
         _target = target;
     }
 
-    private void Start()
-    {
-        Debug.Log((this.transform.position.x, IsOwner));
-    }
-
     void LateUpdate()
     {
         if (_target == null) return;
