@@ -32,7 +32,7 @@ public class FingerRotator : NetworkBehaviour
         _contactGloveManager = contactGloveManager;
     }
 
-    private void Awake()
+    public override void OnNetworkSpawn()
     {
         // 全ての関節データを配列にまとめる
         _allJoints = _handData.ToDictionary(
@@ -45,8 +45,10 @@ public class FingerRotator : NetworkBehaviour
         for (int i = 0; i < _allJoints.Values.SelectMany(joints => joints).Count(); i++)
         {
             JointData jointData = _allJoints.Values.SelectMany(joints => joints).ElementAt(i);
-            _jointValues.Add(0f);
             jointData.Initialize(i);
+            
+            if (IsOwner)
+                _jointValues.Add(0f); // オーナーは各関節を同期するための要素を追加
         }
     }
 
@@ -62,7 +64,7 @@ public class FingerRotator : NetworkBehaviour
             foreach (var jointData in jointDatas)
             {
                 if (IsOwner)
-                    GetJointValue(handSide, jointData); // オーナーは関節の回転を取得してNetworkVariableに保存
+                    GetJointValue(handSide, jointData); // オーナーは関節の回転を取得してNetworkListに保存
 
                 UpdateFinger(handSide, jointData);
             }
@@ -72,11 +74,7 @@ public class FingerRotator : NetworkBehaviour
     // 指定した関節データを基に関節を回転させるメソッド
     private void UpdateFinger(HandSides handSides, JointData jointData)
     {
-        float curlValue = _jointValues[jointData.JointIndex]; // NetworkVariableから値を取得
-
-        // デバッグ用
-        if (!IsOwner)
-            Debug.Log(curlValue);
+        float curlValue = _jointValues[jointData.JointIndex]; // NetworkListから値を取得
 
         if (jointData.Joint == null)
         {
