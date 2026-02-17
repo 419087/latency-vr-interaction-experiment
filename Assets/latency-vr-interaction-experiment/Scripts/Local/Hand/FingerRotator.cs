@@ -50,7 +50,7 @@ public class FingerRotator : NetworkBehaviour
 
     private void Start()
     {
-        _tmp.Value = OwnerClientId; // デバッグ用にオーナーのClientIdをNetworkVariableに保存
+        _jointValues[0].Value = OwnerClientId; // デバッグ用にオーナーのClientIdをNetworkVariableに保存
     }
 
     // Animatorの後に実行される必要があるのでLateUpdateを使用
@@ -65,7 +65,7 @@ public class FingerRotator : NetworkBehaviour
             foreach (var jointData in jointDatas)
             {
                 if (IsOwner)
-                    GetJointValue(handSide, jointData); // オーナーは関節の回転を取得してNetworkVariableに保存
+                    // GetJointValue(handSide, jointData); // オーナーは関節の回転を取得してNetworkVariableに保存
 
                 UpdateFinger(handSide, jointData);
             }
@@ -79,7 +79,7 @@ public class FingerRotator : NetworkBehaviour
 
         // デバッグ用
         if (!IsOwner)
-            Debug.Log(_tmp.Value);
+            Debug.Log(_jointValues[0].Value);
 
         if (jointData.Joint == null)
         {
