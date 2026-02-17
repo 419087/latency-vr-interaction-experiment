@@ -1,18 +1,27 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class AvatarRootFollower : MonoBehaviour
+public class AvatarRootFollower : NetworkBehaviour
 {
-    [SerializeField] private Transform _cameraTarget;
+    private Transform _target;
+
+    public void Construct(Transform target)
+    {
+        _target = target;
+    }
 
     void LateUpdate()
     {
+        if (_target == null) return;
+        if (!IsOwner) return;
+
         // 体の位置を頭の真下に移動（高さは床に固定）
-        Vector3 newPos = _cameraTarget.position;
+        Vector3 newPos = _target.position;
         newPos.y = transform.parent.position.y; // XR Originの床の高さ
         transform.position = newPos;
 
         // 体の向きを頭の回転に合わせる（水平方向のみ）
-        Vector3 forward = _cameraTarget.forward;
+        Vector3 forward = _target.forward;
         forward.y = 0;
         if (forward != Vector3.zero)
         {
