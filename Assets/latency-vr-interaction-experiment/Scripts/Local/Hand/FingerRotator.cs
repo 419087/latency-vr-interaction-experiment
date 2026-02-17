@@ -27,6 +27,8 @@ public class FingerRotator : NetworkBehaviour
         NetworkVariableWritePermission.Owner
     );
 
+    private int _jointCount = 0;
+
     public void Construct(ContactGloveManager contactGloveManager)
     {
         _contactGloveManager = contactGloveManager;
@@ -40,9 +42,11 @@ public class FingerRotator : NetworkBehaviour
             hand => hand.Fingers.SelectMany(finger => finger.Joints).ToList()
         );
 
+        _jointCount = _allJoints.Values.SelectMany(joints => joints).Count();
+
         // 全ての関節の初期回転を保存
         // さらに、全ての関節に対応する要素をNetworkListに追加
-        for (int i = 0; i < _allJoints.Values.SelectMany(joints => joints).Count(); i++)
+        for (int i = 0; i < _jointCount; i++)
         {
             JointData jointData = _allJoints.Values.SelectMany(joints => joints).ElementAt(i);
             jointData.Initialize(i);
@@ -74,6 +78,9 @@ public class FingerRotator : NetworkBehaviour
     // 指定した関節データを基に関節を回転させるメソッド
     private void UpdateFinger(HandSides handSides, JointData jointData)
     {
+        if (_jointCount != _jointValues.Count)
+            return;
+
         float curlValue = _jointValues[jointData.JointIndex]; // NetworkListから値を取得
 
         if (jointData.Joint == null)
