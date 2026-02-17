@@ -22,14 +22,14 @@ public class FingerRotator : NetworkBehaviour
 
     private List<NetworkVariable<float>> _jointValues = new List<NetworkVariable<float>>();
 
-    private NetworkVariable<float> _tmp = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); // デバッグ用
+    private NetworkVariable<float> _tmp = new NetworkVariable<float>(-1f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); // デバッグ用
 
     public void Construct(ContactGloveManager contactGloveManager)
     {
         _contactGloveManager = contactGloveManager;
     }
 
-    public void Awake()
+    private void Awake()
     {
         // 全ての関節データを配列にまとめる
         _allJoints = _handData.ToDictionary(
@@ -46,6 +46,11 @@ public class FingerRotator : NetworkBehaviour
             _jointValues.Add(remoteJointValue);
             jointData.Initialize(i);
         }
+    }
+
+    private void Start()
+    {
+        _tmp.Value = OwnerClientId; // デバッグ用にオーナーのClientIdをNetworkVariableに保存
     }
 
     // Animatorの後に実行される必要があるのでLateUpdateを使用
@@ -74,7 +79,7 @@ public class FingerRotator : NetworkBehaviour
 
         // デバッグ用
         if (!IsOwner)
-            Debug.Log(curlValue);
+            Debug.Log(_tmp.Value);
 
         if (jointData.Joint == null)
         {
