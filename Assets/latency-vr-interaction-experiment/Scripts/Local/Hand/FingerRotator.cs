@@ -31,7 +31,6 @@ public class FingerRotator : NetworkBehaviour
 
     public void Awake()
     {
-        Debug.Log(IsOwner + "オーナーかどうか");
         // 全ての関節データを配列にまとめる
         _allJoints = _handData.ToDictionary(
             hand => hand.HandSide,
@@ -73,6 +72,10 @@ public class FingerRotator : NetworkBehaviour
     {
         float curlValue = _jointValues[jointData.JointIndex].Value; // NetworkVariableから値を取得
 
+        // デバッグ用
+        if (!IsOwner)
+            Debug.Log(curlValue);
+
         if (jointData.Joint == null)
         {
             Debug.LogWarning($"{handSides} {jointData.JointType}が設定されていません。");
@@ -105,10 +108,6 @@ public class FingerRotator : NetworkBehaviour
     private void GetJointValue(HandSides handSides, JointData jointData)
     {
         float curlValue = _contactGloveManager.GetFingerRotationAmplitude(handSides, jointData.JointType);
-
-        // デバッグ用
-        if (!IsOwner)
-            Debug.Log(_jointValues[jointData.JointIndex].Value);
         _jointValues[jointData.JointIndex].Value = curlValue; // NetworkVariableに値を保存
     }
 }
