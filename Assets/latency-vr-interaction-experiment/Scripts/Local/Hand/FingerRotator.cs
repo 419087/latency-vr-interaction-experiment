@@ -27,8 +27,6 @@ public class FingerRotator : NetworkBehaviour
         NetworkVariableWritePermission.Owner
     );
 
-    private NetworkVariable<float> _tmp = new NetworkVariable<float>(-1f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); // デバッグ用
-
     public void Construct(ContactGloveManager contactGloveManager)
     {
         _contactGloveManager = contactGloveManager;
@@ -43,7 +41,7 @@ public class FingerRotator : NetworkBehaviour
         );
 
         // 全ての関節の初期回転を保存
-        // さらに、全ての関節に対応するNetworkVariableを作成して保存
+        // さらに、全ての関節に対応する要素をNetworkListに追加
         for (int i = 0; i < _allJoints.Values.SelectMany(joints => joints).Count(); i++)
         {
             JointData jointData = _allJoints.Values.SelectMany(joints => joints).ElementAt(i);
@@ -112,6 +110,6 @@ public class FingerRotator : NetworkBehaviour
     private void GetJointValue(HandSides handSides, JointData jointData)
     {
         float curlValue = _contactGloveManager.GetFingerRotationAmplitude(handSides, jointData.JointType);
-        _jointValues[jointData.JointIndex] = curlValue; // NetworkVariableに値を保存
+        _jointValues[jointData.JointIndex] = curlValue; // NetworkListに値を保存
     }
 }
