@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LeftControllerMarker : MonoBehaviour
+public class LeftControllerMarker : ControllerMarker
 {
     
 }
