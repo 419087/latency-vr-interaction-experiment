@@ -31,6 +31,7 @@ public class FingerRotator : NetworkBehaviour
 
     public void Awake()
     {
+        Debug.Log(IsOwner + "オーナーかどうか");
         // 全ての関節データを配列にまとめる
         _allJoints = _handData.ToDictionary(
             hand => hand.HandSide,
@@ -45,7 +46,6 @@ public class FingerRotator : NetworkBehaviour
             var remoteJointValue = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
             _jointValues.Add(remoteJointValue);
             jointData.Initialize(i);
-            Debug.Log(i + ": " + jointData.JointType); // デバッグ用に初期回転を表示
         }
     }
 
