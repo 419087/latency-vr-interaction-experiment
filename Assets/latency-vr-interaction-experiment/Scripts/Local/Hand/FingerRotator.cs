@@ -21,7 +21,7 @@ public class FingerRotator : NetworkBehaviour
 
     private Dictionary<HandSides, List<JointData>> _allJoints; // 「手: その手に属する関節のリスト」という形式の辞書(Startで初期化)
 
-    private List<NetworkVariable<float>> _jointValues = new List<NetworkVariable<float>>();
+    private NetworkList<float> _jointValues = new NetworkList<float>();
 
     private NetworkVariable<float> _tmp = new NetworkVariable<float>(-1f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); // デバッグ用
 
@@ -43,15 +43,9 @@ public class FingerRotator : NetworkBehaviour
         for (int i = 0; i < _allJoints.Values.SelectMany(joints => joints).Count(); i++)
         {
             JointData jointData = _allJoints.Values.SelectMany(joints => joints).ElementAt(i);
-            var remoteJointValue = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-            _jointValues.Add(remoteJointValue);
+            _jointValues.Add(0f);
             jointData.Initialize(i);
         }
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        _jointValues[0].Value = OwnerClientId; // デバッグ用にオーナーのClientIdをNetworkVariableに保存
     }
 
     // Animatorの後に実行される必要があるのでLateUpdateを使用
@@ -76,14 +70,11 @@ public class FingerRotator : NetworkBehaviour
     // 指定した関節データを基に関節を回転させるメソッド
     private void UpdateFinger(HandSides handSides, JointData jointData)
     {
-        float curlValue = _jointValues[jointData.JointIndex].Value; // NetworkVariableから値を取得
+        float curlValue = _jointValues[jointData.JointIndex]; // NetworkVariableから値を取得
 
         // デバッグ用
         if (!IsOwner)
-        {
-            Debug.Log(OwnerClientId + "オーナーではありません");
-            Debug.Log(_jointValues[0].Value);
-        }
+            Debug.Log(curlValue);
 
         if (jointData.Joint == null)
         {
@@ -117,7 +108,6 @@ public class FingerRotator : NetworkBehaviour
     private void GetJointValue(HandSides handSides, JointData jointData)
     {
         float curlValue = _contactGloveManager.GetFingerRotationAmplitude(handSides, jointData.JointType);
-        DateTime now = DateTime.Now;
-        _jointValues[0].Value = now.Second + now.Millisecond / 1000f; // NetworkVariableに値を保存
+        _jointValues[jointData.JointIndex] = curlValue; // NetworkVariableに値を保存
     }
 }
