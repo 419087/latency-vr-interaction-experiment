@@ -26,17 +26,19 @@ public class PlayerInitializer : NetworkBehaviour, IPlayerPrefabMarker
         _fingerRotator.Construct(vrConfig.ContactGloveManager);
         if (IsServer)
         {
+            Debug.Log("サーバーとして構築");
             _leftTouchInteractor.ConstructServer(vrConfig.LeftControllerMarker.HapticImpulsePlayer, taskExcuter);
             _rightTouchInteractor.ConstructServer(vrConfig.RightControllerMarker.HapticImpulsePlayer, taskExcuter);
         }
         else
         {
+            Debug.Log("クライアントとして構築");
             _leftTouchInteractor.ConstructClient(vrConfig.LeftControllerMarker.HapticImpulsePlayer);
             _rightTouchInteractor.ConstructClient(vrConfig.RightControllerMarker.HapticImpulsePlayer);
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         var scope = LifetimeScope.Find<GameLifetimeScope>();
         scope.Container.Inject(this);
