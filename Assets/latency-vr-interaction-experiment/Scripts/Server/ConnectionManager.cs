@@ -5,7 +5,7 @@ using VContainer;
 // サーバー側での接続管理とプレイヤースポーンを担当するクラス
 public class ConnectionManager : MonoBehaviour
 {
-    private NetworkConfigData _config;
+    private int _maxClients;
     private NetworkManager _networkManager;
     private PlayerSpawner _playerSpawner;
 
@@ -15,7 +15,7 @@ public class ConnectionManager : MonoBehaviour
     public void Construct(NetworkManager networkManager, NetworkConfigData config, PlayerSpawner playerSpawner)
     {
         _networkManager = networkManager;
-        _config = config;
+        _maxClients = config.MaxClients;
         _playerSpawner = playerSpawner;
     }
 
@@ -44,7 +44,7 @@ public class ConnectionManager : MonoBehaviour
     // 接続数がmaxClients未満の場合のみ承認する(サーバーを除く)
     private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
     {
-        Debug.Log($"接続可能か確認: 現在の接続数 {_currentClientCount} / 最大接続数 {_config.MaxClients}");
+        Debug.Log($"接続可能か確認: 現在の接続数 {_currentClientCount} / 最大接続数 {_maxClients}");
 
         // サーバー自身の接続は無条件で通し、カウントもしない
         if (request.ClientNetworkId == NetworkManager.ServerClientId)
@@ -55,7 +55,7 @@ public class ConnectionManager : MonoBehaviour
             return;
         }
 
-        if (_currentClientCount < _config.MaxClients)
+        if (_currentClientCount < _maxClients)
         {
             _currentClientCount++;
 
@@ -66,7 +66,7 @@ public class ConnectionManager : MonoBehaviour
         else
         {
             response.Approved = false;
-            response.Reason = $"最大{_config.MaxClients}人までしか接続できません。";
+            response.Reason = $"最大{_maxClients}人までしか接続できません。";
         }
 
         response.Pending = false;

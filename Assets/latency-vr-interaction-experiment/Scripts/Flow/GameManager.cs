@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using VContainer;
+using VIVE.OpenXR;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     public async void StartGame()
     {
+        Debug.Log("タスクを開始します");
+
         var tasks = _taskCreator.CreateTaskList();
 
         for (int i = 0; i < tasks.Count; i++)
@@ -23,6 +26,6 @@ public class GameManager : MonoBehaviour
             await _taskExcuter.ExecuteTask(tasks[i]);
         }
 
-        Debug.Log("All tasks completed!");
+        Debug.Log("すべてのタスクが完了しました");
     }
 }

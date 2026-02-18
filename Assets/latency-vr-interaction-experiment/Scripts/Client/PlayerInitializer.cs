@@ -26,12 +26,4 @@ public class PlayerInitializer : MonoBehaviour, IPlayerPrefabMarker
         _leftTouchInteractor.Construct(vrConfig.LeftControllerMarker.HapticImpulsePlayer);
         _rightTouchInteractor.Construct(vrConfig.RightControllerMarker.HapticImpulsePlayer);
     }
-
-    private void Awake()
-    {
-        // 現在のシーンにあるLifetimeScopeを探して自分をInjectする
-        // これにより、クライアント側で自動生成された際も依存関係が注入される
-        var scope = LifetimeScope.Find<GameLifetimeScope>();
-        scope.Container.Inject(this);
-    }
 }
