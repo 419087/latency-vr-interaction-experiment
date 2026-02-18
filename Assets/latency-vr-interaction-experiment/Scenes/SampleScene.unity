@@ -173,9 +173,11 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   _networkManager: {fileID: 532440861}
+  _networkTaskMediator: {fileID: 1976749917}
   _connectionManagerPrefab: {fileID: 5135863570022118104, guid: 8eb1fd41576b3184caac0165835e4061, type: 3}
   _gameManagerPrefab: {fileID: 8641903760988618566, guid: 8f9e18af375326f428408e06dc346ebe, type: 3}
   _serverCanvasPrefab: {fileID: 3311742556122073053, guid: 4efd451e4f256c0418d9fe64dbebfc2e, type: 3}
+  _clientCanvasPrefab: {fileID: 6222047001823099571, guid: f5b244ae8cb6f0644863e54309615ad8, type: 3}
   _cameraMarker: {fileID: 896251581}
   _leftControllerMarker: {fileID: 1003652604}
   _rightControllerMarker: {fileID: 1067380167}
@@ -938,6 +940,77 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1976749915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1976749918}
+  - component: {fileID: 1976749916}
+  - component: {fileID: 1976749917}
+  m_Layer: 0
+  m_Name: NetworkTaskMediator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1976749916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976749915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 1770395289
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &1976749917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976749915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19b83be034f06dd4a939d16b43526d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkTaskMediator
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!4 &1976749918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976749915}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1919.936, y: 1079.6112, z: 0.07249}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -948,5 +1021,6 @@ SceneRoots:
   - {fileID: 1085716221}
   - {fileID: 1891377348}
   - {fileID: 532440860}
+  - {fileID: 1976749918}
   - {fileID: 62282040}
   - {fileID: 791412550}

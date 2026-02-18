@@ -7,9 +7,11 @@ using ContactGloveSDK;
 public class GameLifetimeScope : LifetimeScope
 {
     [SerializeField] private NetworkManager _networkManager;
+    [SerializeField] private NetworkTaskMediator _networkTaskMediator;
     [SerializeField] private ConnectionManager _connectionManagerPrefab;
     [SerializeField] private GameManager _gameManagerPrefab;
     [SerializeField] private ServerCanvas _serverCanvasPrefab;
+    [SerializeField] private ClientCanvas _clientCanvasPrefab;
 
     [Header("VR Target Settings")]
     [SerializeField] private CameraMarker _cameraMarker;
@@ -29,6 +31,7 @@ public class GameLifetimeScope : LifetimeScope
     protected override void Configure(IContainerBuilder builder)
     {
         builder.RegisterComponent(_networkManager);
+        builder.RegisterComponent(_networkTaskMediator);
         
         var vrConfig = new VRConfigData(
             _cameraMarker,
@@ -44,6 +47,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_connectionManagerPrefab);
         builder.RegisterInstance(_gameManagerPrefab);
         builder.RegisterInstance(_serverCanvasPrefab);
+        builder.RegisterInstance(_clientCanvasPrefab);
         builder.RegisterInstance(_playerPrefab);
 
         builder.Register<PlayerSpawner>(Lifetime.Singleton);
