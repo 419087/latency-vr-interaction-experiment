@@ -23,7 +23,7 @@ public class TmpTaskExcuter: ITaskExcuter
         _networkTaskMediator.HideAllTextClientRpc();
     }
 
-    public void CompleteCurrentTask(HandSide handSide1, HandSide handSide2)
+    public void TouchedHand(HandSide handSide1, HandSide handSide2)
     {
         // このクラスではタスクの完了を管理しないため、空実装とする
     }

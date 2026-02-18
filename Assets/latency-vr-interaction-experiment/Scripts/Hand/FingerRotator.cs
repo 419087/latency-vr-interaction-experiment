@@ -32,7 +32,6 @@ public class FingerRotator : NetworkBehaviour
     public void Construct(ContactGloveManager contactGloveManager)
     {
         _contactGloveManager = contactGloveManager;
-        Debug.Log("FingerRotatorがContactGloveManagerを受け取りました");
     }
 
     public override void OnNetworkSpawn()

@@ -1,12 +1,14 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
-public class TaskExcuter: ITaskExcuter
+public class TaskExcuter : ITaskExcuter
 {
     private readonly NetworkTaskMediator _networkTaskMediator;
 
     private UniTaskCompletionSource _taskSource;
-    private HandSide _currentHandSide;
+
+    private bool _isTouchedLeftHand;
+    private bool _isTouchedRightHand;
 
     public TaskExcuter(NetworkTaskMediator networkTaskMediator)
     {
@@ -17,21 +19,37 @@ public class TaskExcuter: ITaskExcuter
     {
         // ここでhandSideに応じたタスクを実行するロジックを実装する
         Debug.Log($"Executing task for {handSide}");
+
+        _isTouchedLeftHand = false;
+        _isTouchedRightHand = false;
+
         _networkTaskMediator.ShowHandSideTextClientRpc(handSide);
 
-        _currentHandSide = handSide;
-        _taskSource = new UniTaskCompletionSource();
+        await UniTask.WaitUntil(() => IsCompleteCurrentTask(handSide));
 
-        await _taskSource.Task;
-        
         _networkTaskMediator.HideAllTextClientRpc();
     }
 
-    public void CompleteCurrentTask(HandSide handSide1, HandSide handSide2)
+    public void TouchedHand(HandSide handSide1, HandSide handSide2)
     {
-        if (handSide1 == _currentHandSide && handSide2 == _currentHandSide)
+        if (handSide1 == handSide2)
         {
-            _taskSource.TrySetResult();
+            if (handSide1 == HandSide.Left)
+            {
+                _isTouchedLeftHand = true;
+            }
+            else if (handSide1 == HandSide.Right)
+            {
+                _isTouchedRightHand = true;
+            }
         }
     }
+
+    private bool IsCompleteCurrentTask(HandSide handSide) => handSide switch
+    {
+        HandSide.Left => _isTouchedLeftHand,
+        HandSide.Right => _isTouchedRightHand,
+        HandSide.Both => _isTouchedLeftHand && _isTouchedRightHand,
+        _ => false
+    };
 }

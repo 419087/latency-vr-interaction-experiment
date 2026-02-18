@@ -20,7 +20,6 @@ public class TouchInteractor : NetworkBehaviour
 
     public void ConstructServer(HapticImpulsePlayer hapticImpulsePlayer, ITaskExcuter taskExcuter)
     {
-        Debug.Log(taskExcuter == null ? "null" : "not null");
         _hapticImpulsePlayer = hapticImpulsePlayer;
         _taskExcuter = taskExcuter;
     }
@@ -44,7 +43,7 @@ public class TouchInteractor : NetworkBehaviour
         {
             if (IsServer)
             {
-                _taskExcuter.CompleteCurrentTask(_handSide, otherNetObj.HandSide);
+                _taskExcuter.TouchedHand(_handSide, otherNetObj.HandSide);
             }
             else if (IsOwner)
             {
