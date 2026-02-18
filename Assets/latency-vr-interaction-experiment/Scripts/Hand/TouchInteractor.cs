@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
+using System.Threading.Tasks;
 
 public class TouchInteractor : NetworkBehaviour
 {
@@ -14,25 +15,40 @@ public class TouchInteractor : NetworkBehaviour
 
     // コントローラーの振動システムをアサイン
     private HapticImpulsePlayer _hapticImpulsePlayer;
+    // サーバーの場合はTaskExcuterをアサイン
+    private ITaskExcuter _taskExcuter;
 
-    public void Construct(HapticImpulsePlayer hapticImpulsePlayer)
+    public void ConstructServer(HapticImpulsePlayer hapticImpulsePlayer, ITaskExcuter taskExcuter)
+    {
+        _hapticImpulsePlayer = hapticImpulsePlayer;
+        _taskExcuter = taskExcuter;
+    }
+
+    public void ConstructClient(HapticImpulsePlayer hapticImpulsePlayer)
     {
         _hapticImpulsePlayer = hapticImpulsePlayer;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // 自分がOwnerでなければ何もしない
-        if (!IsOwner) return;
+        // 自分がOwnerかサーバー側でなければ何もしない
+        if (!IsOwner && !IsServer) return;
 
         // 衝突相手のNetworkObjectを取得
         var otherNetObj = other.gameObject.GetComponent<TouchInteractor>();
         if (otherNetObj == null) return;
 
-        // 相手がOwnerでない手かどうかを確認
-        if (!otherNetObj.IsOwner)
+        // 相手が異なるオーナーの手かどうかを確認
+        if (this.OwnerClientId != otherNetObj.OwnerClientId)
         {
-            TriggerHaptic();
+            if (IsServer)
+            {
+                _taskExcuter.CompleteCurrentTask(_handSide, otherNetObj.HandSide);
+            }
+            else if (IsOwner)
+            {
+                TriggerHaptic();
+            }
         }
     }
 
