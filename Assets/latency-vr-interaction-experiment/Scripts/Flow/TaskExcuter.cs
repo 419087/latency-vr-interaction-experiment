@@ -1,13 +1,14 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using VContainer;
-using System.Threading.Tasks;
 
-public class TmpTaskExcuter: ITaskExcuter
+public class TaskExcuter: ITaskExcuter
 {
     private readonly NetworkTaskMediator _networkTaskMediator;
 
-    public TmpTaskExcuter(NetworkTaskMediator networkTaskMediator)
+    private UniTaskCompletionSource _taskSource;
+    private HandSide _currentHandSide;
+
+    public TaskExcuter(NetworkTaskMediator networkTaskMediator)
     {
         _networkTaskMediator = networkTaskMediator;
     }
@@ -18,13 +19,19 @@ public class TmpTaskExcuter: ITaskExcuter
         Debug.Log($"Executing task for {handSide}");
         _networkTaskMediator.ShowHandSideTextClientRpc(handSide);
 
-        await UniTask.Delay(1000); // 例: 1秒待機するタスク
+        _currentHandSide = handSide;
+        _taskSource = new UniTaskCompletionSource();
+
+        await _taskSource.Task;
         
         _networkTaskMediator.HideAllTextClientRpc();
     }
 
     public void CompleteCurrentTask(HandSide handSide1, HandSide handSide2)
     {
-        // このクラスではタスクの完了を管理しないため、空実装とする
+        if (handSide1 == _currentHandSide || handSide2 == _currentHandSide)
+        {
+            _taskSource.TrySetResult();
+        }
     }
 }
