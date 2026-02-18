@@ -12,17 +12,24 @@ using Unity.Multiplayer.Playmode;
 
 public class NetworkBootstrapper : IStartable
 {
+    private readonly IObjectResolver _resolver;
+    private readonly NetworkManager _networkManagerPrefab;
+    private readonly ConnectionManager _connectionManagerPrefab;
+    private readonly GameManager _gameManagerPrefab;
+    private readonly ServerCanvas _serverCanvasPrefab;
 
-    private readonly NetworkManager _networkManager;
-    private readonly ConnectionManager _connectionManager;
-
-    [Inject]
     public NetworkBootstrapper(
+        IObjectResolver resolver,
         NetworkManager networkManager,
-        ConnectionManager connectionManager)
+        ConnectionManager connectionManagerPrefab,
+        GameManager gameManagerPrefab,
+        ServerCanvas serverCanvasPrefab)
     {
-        _networkManager = networkManager;
-        _connectionManager = connectionManager;
+        _resolver = resolver;
+        _networkManagerPrefab = networkManager;
+        _connectionManagerPrefab = connectionManagerPrefab;
+        _gameManagerPrefab = gameManagerPrefab;
+        _serverCanvasPrefab = serverCanvasPrefab;
     }
 
     public void Start()
@@ -32,7 +39,7 @@ public class NetworkBootstrapper : IStartable
 
         if (tags.Contains("Server"))
         {
-            InitializeDedicatedServer();
+            InitializeServer();
         }
         else if (tags.Contains("Client"))
         {
@@ -49,43 +56,40 @@ public class NetworkBootstrapper : IStartable
 #endif
     }
 
-    private void InitializeDedicatedServer()
+    private void InitializeServer()
     {
         Debug.Log("VContainer [Server]: サーバーとして起動します");
+        
+        _resolver.Instantiate(_connectionManagerPrefab);
+        var gameManagerInstance = _resolver.Instantiate(_gameManagerPrefab);
+        ServerCanvas serverCanvasInstance = _resolver.Instantiate(_serverCanvasPrefab);
 
-        _connectionManager.InitializeConnectionManager();
+        var taskStartButton = serverCanvasInstance.TaskStartButton;
+        taskStartButton.Initialize(gameManagerInstance.GetComponent<GameManager>());
+
+        _connectionManagerPrefab.InitializeConnectionManager();
 
         Application.targetFrameRate = 30;
-        CheckScenes();
         StopXR();
-        _networkManager.StartServer();
-    }
 
-    void CheckScenes()
-    {
-        Debug.Log($"ビルド設定に登録されているシーン:{UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings}");
-        for (int i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings; i++)
-        {
-            string path = UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i);
-            Debug.Log($"Index {i}: {path}");
-        }
+        _networkManagerPrefab.StartServer();
     }
 
     private void InitializeClientGame()
     {
         Debug.Log("VContainer [Client]: クライアントとして起動します");
         Application.targetFrameRate = 60;
-        _networkManager.StartClient();
+        _networkManagerPrefab.StartClient();
     }
 
     private void StopXR()
-{
-    var xrManager = XRGeneralSettings.Instance.Manager;
-    if (xrManager != null && xrManager.isInitializationComplete)
     {
-        Debug.Log("XR Subsystems を停止し、Loader を破棄します...");
-        xrManager.StopSubsystems();
-        xrManager.DeinitializeLoader();
+        var xrManager = XRGeneralSettings.Instance.Manager;
+        if (xrManager != null && xrManager.isInitializationComplete)
+        {
+            Debug.Log("XR Subsystems を停止し、Loader を破棄します...");
+            xrManager.StopSubsystems();
+            xrManager.DeinitializeLoader();
+        }
     }
-}
 }

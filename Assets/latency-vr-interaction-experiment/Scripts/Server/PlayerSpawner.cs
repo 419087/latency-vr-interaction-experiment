@@ -1,18 +1,22 @@
 using UnityEngine;
 using Unity.Netcode;
+using VContainer;
+using VContainer.Unity;
 
 public class PlayerSpawner
 {
-    private readonly GameObject _playerPrefab;
-    public PlayerSpawner(NetworkConfigData config)
+    private IObjectResolver _resolver;
+    private readonly PlayerInitializer _playerPrefab;
+    public PlayerSpawner(IObjectResolver resolver, PlayerInitializer playerPrefab)
     {
-        _playerPrefab = config.PlayerPrefab.gameObject;
+        _resolver = resolver;
+        _playerPrefab = playerPrefab;
     }
 
     public void SpawnPlayerForClient(ulong clientId)
     {
         Vector3 spawnPos = new Vector3(clientId * 2.0f, 0, 0);
-        GameObject playerInstance = Object.Instantiate(_playerPrefab, spawnPos, Quaternion.identity);
+        PlayerInitializer playerInstance = _resolver.Instantiate(_playerPrefab, spawnPos, Quaternion.identity);
 
         NetworkObject netObj = playerInstance.GetComponent<NetworkObject>();
 
