@@ -32,10 +32,12 @@ public class FingerRotator : NetworkBehaviour
     public void Construct(ContactGloveManager contactGloveManager)
     {
         _contactGloveManager = contactGloveManager;
+        Debug.Log("FingerRotatorがContactGloveManagerを受け取りました");
     }
 
     public override void OnNetworkSpawn()
     {
+        Debug.Log("スポーンしました");
         // 全ての関節データを配列にまとめる
         _allJoints = _handData.ToDictionary(
             hand => hand.HandSide,
@@ -59,6 +61,9 @@ public class FingerRotator : NetworkBehaviour
     // Animatorの後に実行される必要があるのでLateUpdateを使用
     private void LateUpdate()
     {
+        if (!IsSpawned)
+            return;
+
         // 全ての関節を更新
         foreach (var handEntry in _allJoints)
         {

@@ -47,7 +47,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_playerPrefab);
 
         builder.Register<PlayerSpawner>(Lifetime.Singleton);
-        builder.Register<TmpTaskExcuter>(Lifetime.Singleton);
+        builder.Register<TmpTaskExcuter>(Lifetime.Singleton).As<ITaskExcuter>();;
         builder.Register<TaskCreator>(Lifetime.Singleton);
 
         builder.RegisterEntryPoint<NetworkBootstrapper>();

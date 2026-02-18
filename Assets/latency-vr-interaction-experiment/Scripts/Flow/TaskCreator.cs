@@ -5,20 +5,17 @@ public class TaskCreator
 {
     private readonly int _taskIterations;
 
-    public TaskCreator(int taskIterations)
+    public TaskCreator(TaskConfigData taskConfig)
     {
-        _taskIterations = taskIterations;
+        _taskIterations = taskConfig.TaskIterations;
     }
 
-    /// <summary>
-    /// Right, Left, Both を各10回ずつ、ランダムな順序で並べたListを返す
-    /// </summary>
     public List<HandSide> CreateTaskList()
     {
         List<HandSide> taskList = new List<HandSide>();
 
-        // 各enumを10回ずつ追加
-        for (int i = 0; i < 10; i++)
+        // 各enumを_taskIterations回ずつ追加
+        for (int i = 0; i < _taskIterations; i++)
         {
             taskList.Add(HandSide.Right);
             taskList.Add(HandSide.Left);

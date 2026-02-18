@@ -1,8 +1,10 @@
 using UnityEngine;
 using VContainer;
+using Unity.Netcode;
 using VContainer.Unity;
 
-public class PlayerInitializer : MonoBehaviour, IPlayerPrefabMarker
+
+public class PlayerInitializer : NetworkBehaviour, IPlayerPrefabMarker
 {
     
     [SerializeField] private VRRigFollower _camerarRigFollower;
@@ -25,5 +27,11 @@ public class PlayerInitializer : MonoBehaviour, IPlayerPrefabMarker
         _fingerRotator.Construct(vrConfig.ContactGloveManager);
         _leftTouchInteractor.Construct(vrConfig.LeftControllerMarker.HapticImpulsePlayer);
         _rightTouchInteractor.Construct(vrConfig.RightControllerMarker.HapticImpulsePlayer);
+    }
+
+    private void Awake()
+    {
+        var scope = LifetimeScope.Find<GameLifetimeScope>();
+        scope.Container.Inject(this);
     }
 }
