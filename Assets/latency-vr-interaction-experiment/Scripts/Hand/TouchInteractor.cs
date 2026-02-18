@@ -20,6 +20,7 @@ public class TouchInteractor : NetworkBehaviour
 
     public void ConstructServer(HapticImpulsePlayer hapticImpulsePlayer, ITaskExcuter taskExcuter)
     {
+        Debug.Log(taskExcuter == null ? "null" : "not null");
         _hapticImpulsePlayer = hapticImpulsePlayer;
         _taskExcuter = taskExcuter;
     }

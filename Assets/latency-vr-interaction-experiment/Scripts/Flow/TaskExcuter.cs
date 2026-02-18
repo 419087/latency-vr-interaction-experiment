@@ -29,7 +29,7 @@ public class TaskExcuter: ITaskExcuter
 
     public void CompleteCurrentTask(HandSide handSide1, HandSide handSide2)
     {
-        if (handSide1 == _currentHandSide || handSide2 == _currentHandSide)
+        if (handSide1 == _currentHandSide && handSide2 == _currentHandSide)
         {
             _taskSource.TrySetResult();
         }
