@@ -1,6 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 using VContainer;
+using VIVE.OpenXR;
 
 // サーバー側での接続管理とプレイヤースポーンを担当するクラス
 public class ConnectionManager : MonoBehaviour
@@ -28,6 +29,10 @@ public class ConnectionManager : MonoBehaviour
             // 承認が完了し、接続が確立された後にスポーンさせるためのコールバック
             _networkManager.OnClientConnectedCallback += OnClientConnected;
             _networkManager.OnClientDisconnectCallback += OnClientDisconnected;
+        }
+        else
+        {
+            Debug.LogError("ConnectionManager: NetworkManagerが見つかりません。接続管理が機能しません。");
         }
     }
 

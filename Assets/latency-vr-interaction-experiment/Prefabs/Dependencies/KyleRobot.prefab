@@ -1007,7 +1007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3688892911
+  GlobalObjectIdHash: 2132726244
   InScenePlacedSourceGlobalObjectIdHash: 3101823039
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1037,8 +1037,8 @@ MonoBehaviour:
   _rightVrRigFollower: {fileID: 6621737184286932165}
   _avatarRootFollower: {fileID: 7963017938018048121}
   _fingerRotator: {fileID: 6837770083751706192}
-  _leftTouchInteractor: {fileID: 0}
-  _rightTouchInteractor: {fileID: 0}
+  _leftTouchInteractor: {fileID: 2441569567050204284}
+  _rightTouchInteractor: {fileID: 6839197915379528214}
 --- !u!4 &1426975800524700542 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7912871085775188923, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}

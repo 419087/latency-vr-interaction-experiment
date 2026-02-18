@@ -60,14 +60,14 @@ public class NetworkBootstrapper : IStartable
     {
         Debug.Log("VContainer [Server]: サーバーとして起動します");
         
-        _resolver.Instantiate(_connectionManagerPrefab);
+        var connectionManagerInstance = _resolver.Instantiate(_connectionManagerPrefab);
         var gameManagerInstance = _resolver.Instantiate(_gameManagerPrefab);
         ServerCanvas serverCanvasInstance = _resolver.Instantiate(_serverCanvasPrefab);
 
         var taskStartButton = serverCanvasInstance.TaskStartButton;
         taskStartButton.Initialize(gameManagerInstance.GetComponent<GameManager>());
 
-        _connectionManagerPrefab.InitializeConnectionManager();
+        connectionManagerInstance.InitializeConnectionManager();
 
         Application.targetFrameRate = 30;
         StopXR();
