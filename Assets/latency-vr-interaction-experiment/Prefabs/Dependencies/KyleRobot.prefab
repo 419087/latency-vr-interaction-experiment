@@ -973,6 +973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TouchInteractor
   ShowTopMostFoldoutHeaderGroup: 1
+  _handSide: 0
   _hapticAmplitude: 1
   _hapticDuration: 0.1
 --- !u!4 &647498702098309566 stripped
@@ -1032,6 +1033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebca3289c0828354489808ea48b9af16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInitializer
+  ShowTopMostFoldoutHeaderGroup: 1
   _camerarRigFollower: {fileID: 4132463479265193996}
   _leftVrRigFollower: {fileID: 79205558791785223}
   _rightVrRigFollower: {fileID: 6621737184286932165}
@@ -1337,6 +1339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TouchInteractor
   ShowTopMostFoldoutHeaderGroup: 1
+  _handSide: 1
   _hapticAmplitude: 1
   _hapticDuration: 0.1
 --- !u!4 &7643870217545319362 stripped

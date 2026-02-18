@@ -4,6 +4,9 @@ using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
 
 public class TouchInteractor : NetworkBehaviour
 {
+    [SerializeField] private HandSide _handSide;
+    public HandSide HandSide => _handSide;
+
     [Header("Haptic Settings")]
     [Range(0f, 1f)]
     [SerializeField] private float _hapticAmplitude = 1f;

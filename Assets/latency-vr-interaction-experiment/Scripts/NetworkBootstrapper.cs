@@ -13,23 +13,29 @@ using Unity.Multiplayer.Playmode;
 public class NetworkBootstrapper : IStartable
 {
     private readonly IObjectResolver _resolver;
-    private readonly NetworkManager _networkManagerPrefab;
+    private readonly NetworkManager _networkManager;
+    private readonly NetworkTaskMediator _networkTaskMediator;
     private readonly ConnectionManager _connectionManagerPrefab;
     private readonly GameManager _gameManagerPrefab;
     private readonly ServerCanvas _serverCanvasPrefab;
+    private readonly ClientCanvas _clientCanvasPrefab;
 
     public NetworkBootstrapper(
         IObjectResolver resolver,
         NetworkManager networkManager,
+        NetworkTaskMediator networkTaskMediator,
         ConnectionManager connectionManagerPrefab,
         GameManager gameManagerPrefab,
-        ServerCanvas serverCanvasPrefab)
+        ServerCanvas serverCanvasPrefab,
+        ClientCanvas clientCanvasPrefab)
     {
         _resolver = resolver;
-        _networkManagerPrefab = networkManager;
+        _networkManager = networkManager;
+        _networkTaskMediator = networkTaskMediator;
         _connectionManagerPrefab = connectionManagerPrefab;
         _gameManagerPrefab = gameManagerPrefab;
         _serverCanvasPrefab = serverCanvasPrefab;
+        _clientCanvasPrefab = clientCanvasPrefab;
     }
 
     public void Start()
@@ -59,7 +65,7 @@ public class NetworkBootstrapper : IStartable
     private void InitializeServer()
     {
         Debug.Log("VContainer [Server]: サーバーとして起動します");
-        
+
         var connectionManagerInstance = _resolver.Instantiate(_connectionManagerPrefab);
         var gameManagerInstance = _resolver.Instantiate(_gameManagerPrefab);
         ServerCanvas serverCanvasInstance = _resolver.Instantiate(_serverCanvasPrefab);
@@ -72,14 +78,19 @@ public class NetworkBootstrapper : IStartable
         Application.targetFrameRate = 30;
         StopXR();
 
-        _networkManagerPrefab.StartServer();
+        _networkManager.StartServer();
     }
 
     private void InitializeClientGame()
     {
         Debug.Log("VContainer [Client]: クライアントとして起動します");
+
         Application.targetFrameRate = 60;
-        _networkManagerPrefab.StartClient();
+
+        var clientCanvasInstance = _resolver.Instantiate(_clientCanvasPrefab);
+        _networkTaskMediator.InitializeAsClient(clientCanvasInstance);
+
+        _networkManager.StartClient();
     }
 
     private void StopXR()
