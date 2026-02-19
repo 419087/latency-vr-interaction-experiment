@@ -1,7 +1,7 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Unity.Netcode;
-using System.Collections.Generic;
+using System.Diagnostics;
 
 public class TaskExcuter : ITaskExcuter
 {
@@ -9,21 +9,22 @@ public class TaskExcuter : ITaskExcuter
     private readonly NetworkManager _networkManager;
 
     private readonly PlayerData _playerData;
-
+    private readonly ResultCounter _resultManager;
     private bool _isTouchedLeftHand;
     private bool _isTouchedRightHand;
 
-    public TaskExcuter(NetworkTaskMediator networkTaskMediator, NetworkManager networkManager, PlayerData playerData)
+    public TaskExcuter(NetworkTaskMediator networkTaskMediator, NetworkManager networkManager, PlayerData playerData, ResultCounter resultManager)
     {
         _networkTaskMediator = networkTaskMediator;
         _networkManager = networkManager;
         _playerData = playerData;
+        _resultManager = resultManager;
     }
 
     public async UniTask ExecuteTask(HandSide handSide)
     {
         // ここでhandSideに応じたタスクを実行するロジックを実装する
-        Debug.Log($"Executing task for {handSide}");
+        UnityEngine.Debug.Log($"Executing task for {handSide}");
 
         _isTouchedLeftHand = false;
         _isTouchedRightHand = false;
@@ -31,7 +32,14 @@ public class TaskExcuter : ITaskExcuter
         SendClientHandSideText(handSide, 0);
         SendClientHandSideText(handSide.Opposite(), 1);
 
+        // 時間を計測する
+        Stopwatch sw = Stopwatch.StartNew();
+
         await UniTask.WaitUntil(() => IsCompleteCurrentTask(handSide));
+
+        sw.Stop();
+        _resultManager.AddTaskTime(sw.ElapsedMilliseconds);
+        UnityEngine.Debug.Log($"Task execution time: {sw.ElapsedMilliseconds} ms");
 
         _networkTaskMediator.HideAllTextClientRpc();
     }
@@ -64,7 +72,7 @@ public class TaskExcuter : ITaskExcuter
         ulong? clientId = _playerData.GetClientId(playerId);
         if (!clientId.HasValue)
         {
-            Debug.LogError($"PlayerId {playerId} に対応するClientIdが見つかりません。");
+            UnityEngine.Debug.LogError($"PlayerId {playerId} に対応するClientIdが見つかりません。");
             return;
         }
 
