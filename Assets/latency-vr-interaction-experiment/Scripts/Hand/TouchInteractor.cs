@@ -15,13 +15,15 @@ public class TouchInteractor : NetworkBehaviour
 
     // コントローラーの振動システムをアサイン
     private HapticImpulsePlayer _hapticImpulsePlayer;
-    // サーバーの場合はTaskExcuterをアサイン
+    // サーバーの場合はTaskExcuterとPlayerDataをアサイン
     private ITaskExcuter _taskExcuter;
+    private PlayerData _playerData;
 
-    public void ConstructServer(HapticImpulsePlayer hapticImpulsePlayer, ITaskExcuter taskExcuter)
+    public void ConstructServer(HapticImpulsePlayer hapticImpulsePlayer, ITaskExcuter taskExcuter, PlayerData playerData)
     {
         _hapticImpulsePlayer = hapticImpulsePlayer;
         _taskExcuter = taskExcuter;
+        _playerData = playerData;
     }
 
     public void ConstructClient(HapticImpulsePlayer hapticImpulsePlayer)
@@ -41,7 +43,8 @@ public class TouchInteractor : NetworkBehaviour
         // 相手が異なるオーナーの手かどうかを確認
         if (this.OwnerClientId != otherNetObj.OwnerClientId)
         {
-            if (IsServer)
+            // サーバー側で、playerIDが0のクライアントがオーナーであれば、タスクの状態を更新する
+            if (IsServer && OwnerClientId == _playerData.GetClientId(0))
             {
                 _taskExcuter.TouchedHand(_handSide, otherNetObj.HandSide);
             }

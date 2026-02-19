@@ -17,7 +17,7 @@ public class PlayerInitializer : NetworkBehaviour, IPlayerPrefabMarker
     public GameObject GameObject => this.gameObject;
 
     [Inject]
-    public void Construct(VRConfigData vrConfig, ITaskExcuter taskExcuter)
+    public void Construct(VRConfigData vrConfig, ITaskExcuter taskExcuter, PlayerData playerData)
     {
         _camerarRigFollower.Construct(vrConfig.CameraMarker.transform);
         _leftVrRigFollower.Construct(vrConfig.LeftControllerMarker.transform);
@@ -26,8 +26,8 @@ public class PlayerInitializer : NetworkBehaviour, IPlayerPrefabMarker
         _fingerRotator.Construct(vrConfig.ContactGloveManager);
         if (IsServer)
         {
-            _leftTouchInteractor.ConstructServer(vrConfig.LeftControllerMarker.HapticImpulsePlayer, taskExcuter);
-            _rightTouchInteractor.ConstructServer(vrConfig.RightControllerMarker.HapticImpulsePlayer, taskExcuter);
+            _leftTouchInteractor.ConstructServer(vrConfig.LeftControllerMarker.HapticImpulsePlayer, taskExcuter, playerData);
+            _rightTouchInteractor.ConstructServer(vrConfig.RightControllerMarker.HapticImpulsePlayer, taskExcuter, playerData);
         }
         else
         {

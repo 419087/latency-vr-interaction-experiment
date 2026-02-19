@@ -36,10 +36,9 @@ public class TaskExcuter : ITaskExcuter
         _networkTaskMediator.HideAllTextClientRpc();
     }
 
-    // TODO: 両手の時は違う側の手でtrueにする必要がある
     public void TouchedHand(HandSide handSide1, HandSide handSide2)
     {
-        if (handSide1 == handSide2)
+        if (handSide1 == handSide2.Opposite())
         {
             if (handSide1 == HandSide.Left)
             {
