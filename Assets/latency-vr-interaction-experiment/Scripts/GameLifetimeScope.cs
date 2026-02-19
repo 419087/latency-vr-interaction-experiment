@@ -28,6 +28,8 @@ public class GameLifetimeScope : LifetimeScope
 
     [Header("Task Settings")]
     [SerializeField] private int _taskIterations = 10;
+    [SerializeField] private int _minTaskIntervalMilliSeconds = 1000;
+    [SerializeField] private int _maxTaskIntervalMilliSeconds = 5000;
 
     protected override void Configure(IContainerBuilder builder)
     {
@@ -40,7 +42,7 @@ public class GameLifetimeScope : LifetimeScope
             _rightControllerMarker,
             _contactGloveManager);
         var networkConfig = new NetworkConfigData(_maxClients);
-        var taskConfig = new TaskConfigData(_taskIterations);
+        var taskConfig = new TaskConfigData(_taskIterations, _minTaskIntervalMilliSeconds, _maxTaskIntervalMilliSeconds);
 
         builder.RegisterInstance(_entryConfig);
         builder.RegisterInstance(vrConfig);
