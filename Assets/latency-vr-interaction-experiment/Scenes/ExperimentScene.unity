@@ -172,6 +172,7 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  _entryConfig: {fileID: 11400000, guid: bb6c7992900442a4f8caa1c06d5e3f33, type: 2}
   _networkManager: {fileID: 532440861}
   _networkTaskMediator: {fileID: 1976749917}
   _connectionManagerPrefab: {fileID: 5135863570022118104, guid: 8eb1fd41576b3184caac0165835e4061, type: 3}

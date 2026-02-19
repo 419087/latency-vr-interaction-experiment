@@ -14,6 +14,7 @@ using Unity.Multiplayer.Playmode;
 public class NetworkBootstrapper : IStartable
 {
     private readonly IObjectResolver _resolver;
+    private readonly EntryConfig _entryConfig;
     private readonly NetworkManager _networkManager;
     private readonly NetworkTaskMediator _networkTaskMediator;
     private readonly ConnectionManager _connectionManagerPrefab;
@@ -23,6 +24,7 @@ public class NetworkBootstrapper : IStartable
 
     public NetworkBootstrapper(
         IObjectResolver resolver,
+        EntryConfig entryConfig,
         NetworkManager networkManager,
         NetworkTaskMediator networkTaskMediator,
         ConnectionManager connectionManagerPrefab,
@@ -31,6 +33,7 @@ public class NetworkBootstrapper : IStartable
         ClientCanvas clientCanvasPrefab)
     {
         _resolver = resolver;
+        _entryConfig = entryConfig;
         _networkManager = networkManager;
         _networkTaskMediator = networkTaskMediator;
         _connectionManagerPrefab = connectionManagerPrefab;
@@ -41,26 +44,14 @@ public class NetworkBootstrapper : IStartable
 
     public void Start()
     {
-#if UNITY_EDITOR
-        var tags = CurrentPlayer.ReadOnlyTags();
-
-        if (tags.Contains("Server"))
+        if (_entryConfig.IsServer)
         {
             InitializeServer();
         }
-        else if (tags.Contains("Client"))
-        {
-            InitializeClientGame();
-        }
         else
         {
-            Debug.Log("ネットワークを使わずに起動します");
+            InitializeClientGame(_entryConfig.PlayerId, _entryConfig.ParticipantId);
         }
-#elif UNITY_SERVER
-        InitializeDedicatedServer();
-#else
-        InitializeClientGame();
-#endif
     }
 
     private void InitializeServer()
@@ -82,7 +73,7 @@ public class NetworkBootstrapper : IStartable
         _networkManager.StartServer();
     }
 
-    private void InitializeClientGame(int playerId = 0, int participantId = 0)
+    private void InitializeClientGame(int playerId, int participantId)
     {
         Debug.Log("VContainer [Client]: クライアントとして起動します");
 

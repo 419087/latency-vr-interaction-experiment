@@ -74,7 +74,7 @@ public class ConnectionManager : MonoBehaviour
                     reader.ReadValueSafe(out int participantId);
 
                     _playerData.AddPlayer(playerId, request.ClientNetworkId, participantId);
-                    Debug.Log($"Client {request.ClientNetworkId}: PlayerId={playerId}, ParticipantId={participantId}");
+                    Debug.Log($"接続試行: ClientId={request.ClientNetworkId}, PlayerId={playerId}, ParticipantId={participantId}");
                 }
             }
 

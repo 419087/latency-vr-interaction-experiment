@@ -6,6 +6,7 @@ using ContactGloveSDK;
 
 public class GameLifetimeScope : LifetimeScope
 {
+    [SerializeField] private EntryConfig _entryConfig;
     [SerializeField] private NetworkManager _networkManager;
     [SerializeField] private NetworkTaskMediator _networkTaskMediator;
     [SerializeField] private ConnectionManager _connectionManagerPrefab;
@@ -41,6 +42,7 @@ public class GameLifetimeScope : LifetimeScope
         var networkConfig = new NetworkConfigData(_maxClients);
         var taskConfig = new TaskConfigData(_taskIterations);
 
+        builder.RegisterInstance(_entryConfig);
         builder.RegisterInstance(vrConfig);
         builder.RegisterInstance(networkConfig);
         builder.RegisterInstance(taskConfig);
