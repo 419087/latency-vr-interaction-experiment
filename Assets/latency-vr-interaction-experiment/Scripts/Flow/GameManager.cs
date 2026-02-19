@@ -8,23 +8,26 @@ public class GameManager : MonoBehaviour
     private TaskCreator _taskCreator;
     private ITaskExcuter _taskExcuter;
     private NetworkTaskMediator _networkTaskMediator;
+    private PlayerData _playerData;
 
     private (int min, int max) _taskIntervalRange;
 
     [Inject]
-    public void Construct(TaskCreator taskCreator, ITaskExcuter taskExcuter, NetworkTaskMediator networkTaskMediator, TaskConfigData taskConfig)
+    public void Construct(TaskCreator taskCreator, ITaskExcuter taskExcuter, NetworkTaskMediator networkTaskMediator, PlayerData playerData, TaskConfigData taskConfig)
     {
         _taskCreator = taskCreator;
         _taskExcuter = taskExcuter;
         _networkTaskMediator = networkTaskMediator;
+        _playerData = playerData;
         _taskIntervalRange = (taskConfig.MinIntervalMilliSeconds, taskConfig.MaxIntervalMilliSeconds);
     }
 
-    public async void StartGame()
+    public async void StartGame(int latencyCondition)
     {
-        Debug.Log("タスクを開始します");
-        
+        Debug.Log($"遅延タスクを開始します(遅延条件: {latencyCondition}ms)");
         _networkTaskMediator.ShowMessageTextClientRpc("タスクを開始します");
+
+        _playerData.SetLatencyCondition(latencyCondition);
 
         var tasks = _taskCreator.CreateTaskList();
 
@@ -41,5 +44,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("すべてのタスクが完了しました");
         _networkTaskMediator.ShowMessageTextClientRpc("すべてのタスクが完了しました");
+
+
     }
 }
