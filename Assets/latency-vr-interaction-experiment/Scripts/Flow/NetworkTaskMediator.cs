@@ -12,7 +12,7 @@ public class NetworkTaskMediator : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void ShowHandSideTextClientRpc(HandSide handSide) => _clientCanvas.ShowHandSideText(handSide);
+    public void ShowHandSideTextClientRpc(HandSide handSide, ClientRpcParams rpcParams = default) => _clientCanvas.ShowHandSideText(handSide);
 
     [ClientRpc]
     public void HideAllTextClientRpc() => _clientCanvas.HideAllText();

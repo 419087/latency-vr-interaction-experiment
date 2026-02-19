@@ -6,3 +6,16 @@ public enum HandSide
     Right,
     Both
 }
+
+public static class EnumExtensions
+{
+    public static HandSide Opposite(this HandSide handSide)
+    {
+        return handSide switch
+        {
+            HandSide.Left => HandSide.Right,
+            HandSide.Right => HandSide.Left,
+            _ => handSide
+        };
+    }
+}
