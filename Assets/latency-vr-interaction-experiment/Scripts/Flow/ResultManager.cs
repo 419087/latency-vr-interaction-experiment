@@ -1,6 +1,8 @@
-using UnityEngine;
-using System.Collections.Generic;
+using System;
 using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class ResultCounter
 {
@@ -37,28 +39,59 @@ public class ResultCounter
 
     public void WriteResultsToCSV()
     {
-        // ファイル名に参加者IDとレイテンシ条件を含める
-        string savePath = $"{_filePath}/id_{_playerData.GetParticipantId(0)}_{_playerData.GetParticipantId(1)}_{_playerData.LatencyCondition}.csv";
+        // 1. ファイル名を作成（この時点ではまだ安全ではない可能性がある）
+        string rawFileName = $"id_{_playerData.GetParticipantId(0)}_{_playerData.GetParticipantId(1)}_{_playerData.LatencyCondition}.csv";
 
-        string folderPath = Path.GetDirectoryName(savePath);
-        
-        // フォルダが存在しない場合は作成する
+        // 2. ファイル名に使えない文字が含まれていたら "_" に置き換える（サニライズ）
+        string safeFileName = string.Join("_", rawFileName.Split(Path.GetInvalidFileNameChars()));
+
+        // 3. 本来の保存先パスを生成
+        string savePath = Path.Combine(_filePath, safeFileName);
+
+        try
+        {
+            // 指定された場所への保存を試みる
+            ExecuteSave(savePath);
+            Debug.Log($"結果を保存しました: {savePath}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"指定パスへの保存に失敗しました({e.Message})。デスクトップへの保存に切り替えます。");
+
+            // 4. 失敗した場合、デスクトップ直下に保存先を変更
+            string desktopPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                "BACKUP_" + safeFileName
+            );
+
+            try
+            {
+                ExecuteSave(desktopPath);
+                Debug.Log($"デスクトップに結果を保存しました: {desktopPath}");
+            }
+            catch (Exception secondE)
+            {
+                Debug.LogError($"デスクトップへの保存も失敗しました。権限等を確認してください: {secondE.Message}");
+            }
+        }
+    }
+
+    // 実際の書き出し処理を分離（再利用と可読性のため）
+    private void ExecuteSave(string path)
+    {
+        string folderPath = Path.GetDirectoryName(path);
         if (!string.IsNullOrEmpty(folderPath) && !Directory.Exists(folderPath))
         {
             Directory.CreateDirectory(folderPath);
         }
 
-        using (var writer = new System.IO.StreamWriter(savePath))  
+        using (var writer = new StreamWriter(path))
         {
             writer.WriteLine("Task,Time(ms)");
             for (int i = 0; i < _taskHands.Count; i++)
             {
-                string hand = _taskHands[i];
-                float time = _taskTimes[i];
-                writer.WriteLine($"{hand},{time}");
+                writer.WriteLine($"{_taskHands[i]},{_taskTimes[i]}");
             }
         }
-
-        Debug.Log($"結果を保存しました: {savePath}");
     }
 }
