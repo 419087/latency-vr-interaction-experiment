@@ -28,8 +28,8 @@ public class GameLifetimeScope : LifetimeScope
 
     [Header("Task Settings")]
     [SerializeField] private int _taskIterations = 10;
-    [SerializeField] private int _minTaskIntervalMilliSeconds = 1000;
-    [SerializeField] private int _maxTaskIntervalMilliSeconds = 5000;
+    [SerializeField] private int _minTaskIntervalMilliSeconds = 5000;
+    [SerializeField] private int _maxTaskIntervalMilliSeconds = 10000;
 
     protected override void Configure(IContainerBuilder builder)
     {
