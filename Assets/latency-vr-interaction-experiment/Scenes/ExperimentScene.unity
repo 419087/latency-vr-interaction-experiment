@@ -185,7 +185,10 @@ MonoBehaviour:
   _contactGloveManager: {fileID: 1891377347}
   _playerPrefab: {fileID: 694353353183168293, guid: 86c3334eea6ec8d449c485d36b41c0b4, type: 3}
   _maxClients: 2
-  _taskIterations: 10
+  _taskIterations: 2
+  _minTaskIntervalMilliSeconds: 5000
+  _maxTaskIntervalMilliSeconds: 10000
+  _resultFilePath: C:\Users\kazuk\Desktop
 --- !u!1 &314139688 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1767192433, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}

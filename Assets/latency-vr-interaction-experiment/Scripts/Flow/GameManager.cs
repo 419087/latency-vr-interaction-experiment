@@ -9,16 +9,18 @@ public class GameManager : MonoBehaviour
     private ITaskExcuter _taskExcuter;
     private NetworkTaskMediator _networkTaskMediator;
     private PlayerData _playerData;
+    private ResultCounter _resultManager;
 
     private (int min, int max) _taskIntervalRange;
 
     [Inject]
-    public void Construct(TaskCreator taskCreator, ITaskExcuter taskExcuter, NetworkTaskMediator networkTaskMediator, PlayerData playerData, TaskConfigData taskConfig)
+    public void Construct(TaskCreator taskCreator, ITaskExcuter taskExcuter, NetworkTaskMediator networkTaskMediator, PlayerData playerData, TaskConfigData taskConfig, ResultCounter resultManager)
     {
         _taskCreator = taskCreator;
         _taskExcuter = taskExcuter;
         _networkTaskMediator = networkTaskMediator;
         _playerData = playerData;
+        _resultManager = resultManager;
         _taskIntervalRange = (taskConfig.MinIntervalMilliSeconds, taskConfig.MaxIntervalMilliSeconds);
     }
 
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviour
         _playerData.SetLatencyCondition(latencyCondition);
 
         var tasks = _taskCreator.CreateTaskList();
+        _resultManager.SetTaskHand(tasks);
 
         for (int i = 0; i < tasks.Count; i++)
         {
@@ -45,6 +48,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("すべてのタスクが完了しました");
         _networkTaskMediator.ShowMessageTextClientRpc("すべてのタスクが完了しました");
 
-
+        _resultManager.WriteResultsToCSV();
     }
 }
