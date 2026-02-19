@@ -39,50 +39,54 @@ public class ResultCounter
 
     public void WriteResultsToCSV()
     {
-        // 1. ファイル名を作成（この時点ではまだ安全ではない可能性がある）
-        string rawFileName = $"id_{_playerData.GetParticipantId(0)}_{_playerData.GetParticipantId(1)}_{_playerData.LatencyCondition}.csv";
+        // 1. フォルダ名とファイル名を別々に定義する（サニタイズしやすくするため）
+        string folderNameRaw = $"id_{_playerData.GetParticipantId(0)}_{_playerData.GetParticipantId(1)}";
+        string fileNameRaw = $"{_playerData.LatencyCondition}.csv";
 
-        // 2. ファイル名に使えない文字が含まれていたら "_" に置き換える（サニライズ）
-        string safeFileName = string.Join("_", rawFileName.Split(Path.GetInvalidFileNameChars()));
+        // 2. それぞれに使えない文字があれば "_" に置換
+        char[] invalidChars = Path.GetInvalidFileNameChars();
+        string safeFolderName = string.Join("_", folderNameRaw.Split(invalidChars));
+        string safeFileName = string.Join("_", fileNameRaw.Split(invalidChars));
 
-        // 3. 本来の保存先パスを生成
-        string savePath = Path.Combine(_filePath, safeFileName);
+        // 3. 最終的なフルパスを組み立てる（指定フォルダ / IDフォルダ / ファイル名）
+        string targetDirectory = Path.Combine(_filePath, safeFolderName);
+        string fullPath = Path.Combine(targetDirectory, safeFileName);
 
         try
         {
-            // 指定された場所への保存を試みる
-            ExecuteSave(savePath);
-            Debug.Log($"結果を保存しました: {savePath}");
+            ExecuteSave(fullPath);
+            Debug.Log($"データを保存しました: {fullPath}");
         }
         catch (Exception e)
         {
-            Debug.LogWarning($"指定パスへの保存に失敗しました({e.Message})。デスクトップへの保存に切り替えます。");
+            Debug.LogWarning($"指定パスへの保存に失敗({e.Message})。デスクトップへ退避します。");
 
-            // 4. 失敗した場合、デスクトップ直下に保存先を変更
+            // 4. デスクトップに「ID_ファイル名」の形で保存
             string desktopPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                "BACKUP_" + safeFileName
+                $"{safeFolderName}_{safeFileName}"
             );
 
             try
             {
                 ExecuteSave(desktopPath);
-                Debug.Log($"デスクトップに結果を保存しました: {desktopPath}");
+                Debug.Log($"デスクトップに保存しました: {desktopPath}");
             }
             catch (Exception secondE)
             {
-                Debug.LogError($"デスクトップへの保存も失敗しました。権限等を確認してください: {secondE.Message}");
+                Debug.LogError($"完全停止: {secondE.Message}");
             }
         }
     }
 
-    // 実際の書き出し処理を分離（再利用と可読性のため）
+    // フォルダ作成と書き込みの共通ロジック
     private void ExecuteSave(string path)
     {
-        string folderPath = Path.GetDirectoryName(path);
-        if (!string.IsNullOrEmpty(folderPath) && !Directory.Exists(folderPath))
+        string folder = Path.GetDirectoryName(path);
+        // Directory.CreateDirectory は中間フォルダもすべて一気に作ってくれます
+        if (!string.IsNullOrEmpty(folder))
         {
-            Directory.CreateDirectory(folderPath);
+            Directory.CreateDirectory(folder);
         }
 
         using (var writer = new StreamWriter(path))
