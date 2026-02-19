@@ -729,7 +729,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerButton
   _playerId: 1
   _entryConfig: {fileID: 11400000, guid: bb6c7992900442a4f8caa1c06d5e3f33, type: 2}
-  inputField: {fileID: 208084761}
+  _participantIdInputField: {fileID: 0}
 --- !u!1 &389972613
 GameObject:
   m_ObjectHideFlags: 0
@@ -1429,7 +1429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerButton
   _playerId: 0
   _entryConfig: {fileID: 11400000, guid: bb6c7992900442a4f8caa1c06d5e3f33, type: 2}
-  inputField: {fileID: 208084761}
+  _participantIdInputField: {fileID: 208084761}
 --- !u!1 &1145642114
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.IO;
 
 public class ResultCounter
 {
@@ -36,7 +37,18 @@ public class ResultCounter
 
     public void WriteResultsToCSV()
     {
-        using (var writer = new System.IO.StreamWriter(_filePath + $"/id_{_playerData.GetParticipantId(0)}_{_playerData.GetParticipantId(1)}/{_playerData.LatencyCondition}.csv"))
+        // ファイル名に参加者IDとレイテンシ条件を含める
+        string savePath = $"{_filePath}/id_{_playerData.GetParticipantId(0)}_{_playerData.GetParticipantId(1)}_{_playerData.LatencyCondition}.csv";
+
+        string folderPath = Path.GetDirectoryName(savePath);
+        
+        // フォルダが存在しない場合は作成する
+        if (!string.IsNullOrEmpty(folderPath) && !Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+
+        using (var writer = new System.IO.StreamWriter(savePath))  
         {
             writer.WriteLine("Task,Time(ms)");
             for (int i = 0; i < _taskHands.Count; i++)
@@ -46,5 +58,7 @@ public class ResultCounter
                 writer.WriteLine($"{hand},{time}");
             }
         }
+
+        Debug.Log($"結果を保存しました: {savePath}");
     }
 }
