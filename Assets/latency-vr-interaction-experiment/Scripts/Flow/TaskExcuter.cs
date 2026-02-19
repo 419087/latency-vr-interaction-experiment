@@ -1,18 +1,23 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Unity.Netcode;
+using System.Collections.Generic;
 
 public class TaskExcuter : ITaskExcuter
 {
     private readonly NetworkTaskMediator _networkTaskMediator;
+    private readonly NetworkManager _networkManager;
 
-    private UniTaskCompletionSource _taskSource;
+    private readonly PlayerData _playerData;
 
     private bool _isTouchedLeftHand;
     private bool _isTouchedRightHand;
 
-    public TaskExcuter(NetworkTaskMediator networkTaskMediator)
+    public TaskExcuter(NetworkTaskMediator networkTaskMediator, NetworkManager networkManager, PlayerData playerData)
     {
         _networkTaskMediator = networkTaskMediator;
+        _networkManager = networkManager;
+        _playerData = playerData;
     }
 
     public async UniTask ExecuteTask(HandSide handSide)
@@ -23,13 +28,15 @@ public class TaskExcuter : ITaskExcuter
         _isTouchedLeftHand = false;
         _isTouchedRightHand = false;
 
-        _networkTaskMediator.ShowHandSideTextClientRpc(handSide);
+        SendClientHandSideText(handSide, 0);
+        SendClientHandSideText(handSide.Opposite(), 1);
 
         await UniTask.WaitUntil(() => IsCompleteCurrentTask(handSide));
 
         _networkTaskMediator.HideAllTextClientRpc();
     }
 
+    // TODO: 両手の時は違う側の手でtrueにする必要がある
     public void TouchedHand(HandSide handSide1, HandSide handSide2)
     {
         if (handSide1 == handSide2)
@@ -52,4 +59,24 @@ public class TaskExcuter : ITaskExcuter
         HandSide.Both => _isTouchedLeftHand && _isTouchedRightHand,
         _ => false
     };
+
+    private void SendClientHandSideText(HandSide handSide, int playerId)
+    {
+        ulong? clientId = _playerData.GetClientId(playerId);
+        if (!clientId.HasValue)
+        {
+            Debug.LogError($"PlayerId {playerId} に対応するClientIdが見つかりません。");
+            return;
+        }
+
+        ClientRpcParams rpcParams = new ClientRpcParams
+        {
+            Send = new ClientRpcSendParams
+            {
+                TargetClientIds = new ulong[] { clientId.Value }
+            }
+        };
+
+        _networkTaskMediator.ShowHandSideTextClientRpc(handSide, rpcParams);
+    }
 }

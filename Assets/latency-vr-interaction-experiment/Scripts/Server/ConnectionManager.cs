@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 using VContainer;
-using VIVE.OpenXR;
+using Unity.Collections;
 
 // サーバー側での接続管理とプレイヤースポーンを担当するクラス
 public class ConnectionManager : MonoBehaviour
@@ -9,15 +9,17 @@ public class ConnectionManager : MonoBehaviour
     private int _maxClients;
     private NetworkManager _networkManager;
     private PlayerSpawner _playerSpawner;
+    private PlayerData _playerData;
 
     private int _currentClientCount = 0;
 
     [Inject]
-    public void Construct(NetworkManager networkManager, NetworkConfigData config, PlayerSpawner playerSpawner)
+    public void Construct(NetworkManager networkManager, NetworkConfigData config, PlayerSpawner playerSpawner, PlayerData playerData)
     {
         _networkManager = networkManager;
         _maxClients = config.MaxClients;
         _playerSpawner = playerSpawner;
+        _playerData = playerData;
     }
 
     public void InitializeConnectionManager()
@@ -62,6 +64,20 @@ public class ConnectionManager : MonoBehaviour
 
         if (_currentClientCount < _maxClients)
         {
+            // 送られてきたデータのサイズを念のため確認
+            if (request.Payload != null && request.Payload.Length >= sizeof(int) * 2)
+            {
+                // Readerを作成して順番に読み出す
+                using (var reader = new FastBufferReader(request.Payload, Allocator.Temp))
+                {
+                    reader.ReadValueSafe(out int playerId);
+                    reader.ReadValueSafe(out int participantId);
+
+                    _playerData.AddPlayer(playerId, request.ClientNetworkId, participantId);
+                    Debug.Log($"Client {request.ClientNetworkId}: PlayerId={playerId}, ParticipantId={participantId}");
+                }
+            }
+
             _currentClientCount++;
 
             response.Approved = true;

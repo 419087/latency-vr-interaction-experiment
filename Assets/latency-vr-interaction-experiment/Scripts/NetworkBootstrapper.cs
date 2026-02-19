@@ -4,7 +4,8 @@ using System.Linq;
 using VContainer;
 using VContainer.Unity;
 using UnityEngine.XR.Management;
-
+using System;
+using Unity.Collections;
 
 #if UNITY_EDITOR
 using Unity.Multiplayer.Playmode;
@@ -81,7 +82,7 @@ public class NetworkBootstrapper : IStartable
         _networkManager.StartServer();
     }
 
-    private void InitializeClientGame()
+    private void InitializeClientGame(int playerId = 0, int participantId = 0)
     {
         Debug.Log("VContainer [Client]: クライアントとして起動します");
 
@@ -89,6 +90,15 @@ public class NetworkBootstrapper : IStartable
 
         var clientCanvasInstance = _resolver.Instantiate(_clientCanvasPrefab);
         _networkTaskMediator.InitializeAsClient(clientCanvasInstance);
+
+        // プレイヤーIDと参加者IDを接続データとして送る
+        using (var writer = new FastBufferWriter(sizeof(int) * 2, Allocator.Temp))
+        {
+            writer.WriteValueSafe(playerId);
+            writer.WriteValueSafe(participantId);
+
+            _networkManager.NetworkConfig.ConnectionData = writer.ToArray();
+        }
 
         _networkManager.StartClient();
     }
