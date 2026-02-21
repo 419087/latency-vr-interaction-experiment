@@ -5,6 +5,7 @@ using VContainer;
 public class PlayerSpawner
 {
     private readonly PlayerInitializer _playerPrefab;
+
     public PlayerSpawner(PlayerInitializer playerPrefab)
     {
         _playerPrefab = playerPrefab;
