@@ -13,8 +13,7 @@ public class PlayerSpawner
 
     public void SpawnPlayerForClient(ulong clientId)
     {
-        Vector3 spawnPos = new Vector3(clientId * 2.0f, 0, 0);
-        PlayerInitializer playerInstance = Object.Instantiate(_playerPrefab, spawnPos, Quaternion.identity);
+        PlayerInitializer playerInstance = Object.Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
 
         NetworkObject netObj = playerInstance.GetComponent<NetworkObject>();
 
