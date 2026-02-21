@@ -7,6 +7,7 @@ using ContactGloveSDK;
 public class GameLifetimeScope : LifetimeScope
 {
     [SerializeField] private EntryConfig _entryConfig;
+    [SerializeField] private PlayerInitialPositionSetter _playerInitialPositionSetter;
     [SerializeField] private NetworkManager _networkManager;
     [SerializeField] private NetworkTaskMediator _networkTaskMediator;
     [SerializeField] private ConnectionManager _connectionManagerPrefab;
@@ -34,6 +35,7 @@ public class GameLifetimeScope : LifetimeScope
 
     protected override void Configure(IContainerBuilder builder)
     {
+        builder.RegisterComponent(_playerInitialPositionSetter);
         builder.RegisterComponent(_networkManager);
         builder.RegisterComponent(_networkTaskMediator);
         

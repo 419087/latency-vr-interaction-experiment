@@ -173,6 +173,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   _entryConfig: {fileID: 11400000, guid: bb6c7992900442a4f8caa1c06d5e3f33, type: 2}
+  _playerInitialPositionSetter: {fileID: 1085716224}
   _networkManager: {fileID: 532440861}
   _networkTaskMediator: {fileID: 1976749917}
   _connectionManagerPrefab: {fileID: 5135863570022118104, guid: 8eb1fd41576b3184caac0165835e4061, type: 3}
@@ -672,6 +673,10 @@ PrefabInstance:
       propertyPath: m_CullingMask.m_Bits
       value: 55
       objectReference: {fileID: 0}
+    - target: {fileID: 1178791450436251564, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_RequestedTrackingOriginMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503725, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_Name
       value: XR Origin (XR Rig)
@@ -735,6 +740,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1726193746}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1717954561962503725, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1085716224}
     - targetCorrespondingSourceObject: {fileID: 1767192433, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 896251577}
@@ -753,6 +761,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1767192434, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
   m_PrefabInstance: {fileID: 1085716221}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1085716223 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1717954561962503725, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+  m_PrefabInstance: {fileID: 1085716221}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1085716224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085716223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9652094402f428c439582e0a629e3e95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInitialPositionSetter
 --- !u!1 &1504261669
 GameObject:
   m_ObjectHideFlags: 0
