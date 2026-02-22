@@ -570,7 +570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VRRigFollower
   ShowTopMostFoldoutHeaderGroup: 1
   _target: {fileID: 0}
-  _positionOffset: {x: 0.05, y: 0, z: 0}
+  _positionOffset: {x: -0.01, y: -0.07, z: -0.15}
   _rotationOffset: {x: 90, y: 203, z: -90}
 --- !u!114 &3193688256625030922
 MonoBehaviour:
@@ -696,7 +696,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VRRigFollower
   ShowTopMostFoldoutHeaderGroup: 1
   _target: {fileID: 0}
-  _positionOffset: {x: -0.05, y: 0, z: 0}
+  _positionOffset: {x: 0.01, y: -0.07, z: -0.15}
   _rotationOffset: {x: -90, y: 157, z: -90}
 --- !u!114 &8097885104454635579
 MonoBehaviour:
