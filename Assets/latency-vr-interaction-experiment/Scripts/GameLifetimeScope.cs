@@ -63,6 +63,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<TaskCreator>(Lifetime.Singleton);
         builder.Register<PlayerData>(Lifetime.Singleton);
         builder.Register<ResultCounter>(Lifetime.Singleton);
+        builder.Register<ResultWriter>(Lifetime.Singleton);
 
         builder.RegisterEntryPoint<NetworkBootstrapper>();
     }

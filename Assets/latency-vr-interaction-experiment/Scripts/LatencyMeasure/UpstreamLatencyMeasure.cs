@@ -139,4 +139,22 @@ public class UpstreamLatencyMeasurer : NetworkBehaviour
         ulong senderClientId = rpcParams.Receive.SenderClientId;
         Debug.Log($"【サーバー】クライアント({senderClientId})がベースライン計測完了。平均RTT: {avgRtt:F2}ms, 推定下り遅延: {estDownstreamLatency:F2}ms");
     }
+
+    public WritableData GetWritableUpstreamLatency()
+    {
+        var writable = new WritableData(new List<string> { "UpstreamLatency" }, new List<List<string>>());
+        foreach (var latency in _latencyMeasurements)
+        {
+            writable.AddData(new List<string> { latency.ToString() });
+        }
+
+        return writable;
+    }
+
+    public WritableData GetWritableBaselineLatency()
+    {
+        var writable = new WritableData(new List<string> { "AverageRTT", "EstimatedDownstreamLatency" }, new List<List<string>>());
+        writable.AddData(new List<string> { _averageBaselineRtt.ToString(), _estimatedDownstreamLatency.ToString() });
+        return writable;
+    }
 }
