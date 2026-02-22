@@ -1170,7 +1170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AvatarRootFollower
   ShowTopMostFoldoutHeaderGroup: 1
-  _positionOffset: {x: -0.15, y: 0, z: 0}
+  _positionOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1183740430060190205
 MonoBehaviour:
   m_ObjectHideFlags: 0
