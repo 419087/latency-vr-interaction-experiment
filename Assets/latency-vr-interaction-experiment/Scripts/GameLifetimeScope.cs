@@ -10,6 +10,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private PlayerInitialPositionSetter _playerInitialPositionSetter;
     [SerializeField] private NetworkManager _networkManager;
     [SerializeField] private NetworkTaskMediator _networkTaskMediator;
+    [SerializeField] private UpstreamLatencyMeasurer _upstreamLatencyMeasurer;
     [SerializeField] private ConnectionManager _connectionManagerPrefab;
     [SerializeField] private GameManager _gameManagerPrefab;
     [SerializeField] private ServerCanvas _serverCanvasPrefab;
@@ -38,7 +39,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_playerInitialPositionSetter);
         builder.RegisterComponent(_networkManager);
         builder.RegisterComponent(_networkTaskMediator);
-        
+        builder.RegisterComponent(_upstreamLatencyMeasurer);
         var vrConfig = new VRConfigData(
             _cameraMarker,
             _leftControllerMarker,
