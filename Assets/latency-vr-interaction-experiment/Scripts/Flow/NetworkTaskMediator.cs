@@ -6,6 +6,7 @@ public class NetworkTaskMediator : NetworkBehaviour
 {
     private ClientCanvas _clientCanvas;
 
+    // 動的に生成されるオブジェクトのため、後から初期化
     public void InitializeAsClient(ClientCanvas clientCanvas)
     {
         _clientCanvas = clientCanvas;
