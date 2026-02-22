@@ -10,19 +10,21 @@ public class GameManager : MonoBehaviour
     private NetworkTaskMediator _networkTaskMediator;
     private UpstreamLatencyMeasurer _upstreamLatencyMeasurer;
     private PlayerData _playerData;
-    private ResultCounter _resultManager;
+    private ResultCounter _resultCounter;
+    private ResultWriter _resultWriter;
 
     private (int min, int max) _taskIntervalRange;
 
     [Inject]
-    public void Construct(TaskCreator taskCreator, ITaskExcuter taskExcuter, NetworkTaskMediator networkTaskMediator, UpstreamLatencyMeasurer upstreamLatencyMeasurer, PlayerData playerData, TaskConfigData taskConfig, ResultCounter resultManager)
+    public void Construct(TaskCreator taskCreator, ITaskExcuter taskExcuter, NetworkTaskMediator networkTaskMediator, UpstreamLatencyMeasurer upstreamLatencyMeasurer, PlayerData playerData, TaskConfigData taskConfig, ResultCounter resultCounter, ResultWriter resultWriter)
     {
         _taskCreator = taskCreator;
         _taskExcuter = taskExcuter;
         _networkTaskMediator = networkTaskMediator;
         _upstreamLatencyMeasurer = upstreamLatencyMeasurer;
         _playerData = playerData;
-        _resultManager = resultManager;
+        _resultCounter = resultCounter;
+        _resultWriter = resultWriter;
         _taskIntervalRange = (taskConfig.MinIntervalMilliSeconds, taskConfig.MaxIntervalMilliSeconds);
     }
 
@@ -36,7 +38,7 @@ public class GameManager : MonoBehaviour
         _playerData.SetLatencyCondition(latencyCondition);
 
         var tasks = _taskCreator.CreateTaskList();
-        _resultManager.SetTaskHand(tasks);
+        _resultCounter.SetTaskHand(tasks);
 
         for (int i = 0; i < tasks.Count; i++)
         {
@@ -54,6 +56,11 @@ public class GameManager : MonoBehaviour
 
         _upstreamLatencyMeasurer.StopMeasureUpstreamLatencyClientRpc();
 
-        _resultManager.WriteResultsToCSV();
+        var writableTaskResult = _resultCounter.GetWritableTaskResult();
+        var writableUpstreamLatency = _upstreamLatencyMeasurer.GetWritableUpstreamLatency();
+        var writableBaseLineLatency = _upstreamLatencyMeasurer.GetWritableBaselineLatency();
+        _resultWriter.WriteResultsToCSV(writableTaskResult, "TaskResult");
+        _resultWriter.WriteResultsToCSV(writableUpstreamLatency, "UpstreamLatency");
+        _resultWriter.WriteResultsToCSV(writableBaseLineLatency, "BaselineLatency");
     }
 }

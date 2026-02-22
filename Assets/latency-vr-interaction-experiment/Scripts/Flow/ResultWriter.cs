@@ -1,47 +1,25 @@
+using UnityEngine;
 using System;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class ResultCounter
+public class ResultWriter
 {
     private readonly string _filePath;
     private readonly PlayerData _playerData;
 
-    private List<string> _taskHands = new List<string>();
-    private List<float> _taskTimes = new List<float>();
-
-    public ResultCounter(TaskConfigData taskConfigData, PlayerData playerData)
+    public ResultWriter(TaskConfigData taskConfigData, PlayerData playerData)
     {
         _filePath = taskConfigData.ResultFilePath;
         _playerData = playerData;
     }
 
-    public void SetTaskHand(List<HandSide> handSides)
-    {
-        foreach (var handSide in handSides)
-        {
-            _taskHands.Add(handSide switch
-            {
-                HandSide.Left => "Left",
-                HandSide.Right => "Right",
-                HandSide.Both => "Both",
-                _ => "Unknown"
-            });
-        }
-    }
 
-    public void AddTaskTime(long time)
-    {
-        _taskTimes.Add(time);
-    }
-
-    public void WriteResultsToCSV()
+    public void WriteResultsToCSV(IWritable writable, string resultType)
     {
         // 1. フォルダ名とファイル名を別々に定義する（サニタイズしやすくするため）
         string folderNameRaw = $"id_{_playerData.GetParticipantId(0)}_{_playerData.GetParticipantId(1)}";
-        string fileNameRaw = $"{_playerData.LatencyCondition}.csv";
+        string fileNameRaw = $"{_playerData.LatencyCondition}_{resultType}.csv";
 
         // 2. それぞれに使えない文字があれば "_" に置換
         char[] invalidChars = Path.GetInvalidFileNameChars();
@@ -54,7 +32,7 @@ public class ResultCounter
 
         try
         {
-            ExecuteSave(fullPath);
+            ExecuteSave(fullPath, writable);
             Debug.Log($"データを保存しました: {fullPath}");
         }
         catch (Exception e)
@@ -69,7 +47,7 @@ public class ResultCounter
 
             try
             {
-                ExecuteSave(desktopPath);
+                ExecuteSave(desktopPath, writable);
                 Debug.Log($"デスクトップに保存しました: {desktopPath}");
             }
             catch (Exception secondE)
@@ -80,7 +58,7 @@ public class ResultCounter
     }
 
     // フォルダ作成と書き込みの共通ロジック
-    private void ExecuteSave(string path)
+    private void ExecuteSave(string path, IWritable writable)
     {
         string folder = Path.GetDirectoryName(path);
         // Directory.CreateDirectory は中間フォルダもすべて一気に作ってくれます
@@ -91,10 +69,10 @@ public class ResultCounter
 
         using (var writer = new StreamWriter(path))
         {
-            writer.WriteLine("Task,Time(ms)");
-            for (int i = 0; i < _taskHands.Count; i++)
+            writer.WriteLine(string.Join(",", writable.Columns));
+            for (int i = 0; i < writable.Data.Count; i++)
             {
-                writer.WriteLine($"{_taskHands[i]},{_taskTimes[i]}");
+                writer.WriteLine(string.Join(",", writable.Data[i].Select(field => Convert.ToString(field))));
             }
         }
     }
