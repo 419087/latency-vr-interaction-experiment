@@ -6,20 +6,18 @@ using System.Linq;
 public class ResultWriter
 {
     private readonly string _filePath;
-    private readonly PlayerData _playerData;
 
-    public ResultWriter(TaskConfigData taskConfigData, PlayerData playerData)
+    public ResultWriter(TaskConfigData taskConfigData)
     {
         _filePath = taskConfigData.ResultFilePath;
-        _playerData = playerData;
     }
 
 
-    public void WriteResultsToCSV(IWritable writable, string resultType)
+    public void WriteResultsToCSV(IWritable writable, string resultType, int participantId1, int participantId2, int latencyCondition)
     {
         // 1. フォルダ名とファイル名を別々に定義する（サニタイズしやすくするため）
-        string folderNameRaw = $"id_{_playerData.GetParticipantId(0)}_{_playerData.GetParticipantId(1)}";
-        string fileNameRaw = $"{_playerData.LatencyCondition}_{resultType}.csv";
+        string folderNameRaw = $"id_{participantId1}_{participantId2}";
+        string fileNameRaw = $"{latencyCondition}_{resultType}.csv";
 
         // 2. それぞれに使えない文字があれば "_" に置換
         char[] invalidChars = Path.GetInvalidFileNameChars();

@@ -150,11 +150,11 @@ public class UpstreamLatencyMeasurer : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void SaveLatencyClientRpc()
+    public void SaveLatencyClientRpc(int participantId1, int participantId2, int latencyCondition)
     {
         // クライアント側で遅延データを保存する処理を呼び出す
-        _resultWriter.WriteResultsToCSV(GetWritableUpstreamLatency(), "UpstreamLatency");
-        _resultWriter.WriteResultsToCSV(GetWritableBaselineLatency(), "BaselineLatency");
+        _resultWriter.WriteResultsToCSV(GetWritableUpstreamLatency(), "UpstreamLatency", participantId1, participantId2, latencyCondition);
+        _resultWriter.WriteResultsToCSV(GetWritableBaselineLatency(), "BaselineLatency", participantId1, participantId2, latencyCondition);
     }
 
     private WritableData GetWritableUpstreamLatency()
