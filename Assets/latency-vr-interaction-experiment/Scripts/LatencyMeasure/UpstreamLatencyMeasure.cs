@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using System.Collections.Generic;
+using VContainer;
 
 public class UpstreamLatencyMeasurer : NetworkBehaviour
 {
@@ -24,6 +25,14 @@ public class UpstreamLatencyMeasurer : NetworkBehaviour
     private float _nextPingTime = 0;
 
     private List<double> _latencyMeasurements = new List<double>(); // 本計測の遅延値を保存するリスト
+
+    private ResultWriter _resultWriter;
+
+    [Inject]
+    public void Construct(ResultWriter resultWriter)
+    {
+        _resultWriter = resultWriter;
+    }
 
     private void Start()
     {
@@ -140,7 +149,15 @@ public class UpstreamLatencyMeasurer : NetworkBehaviour
         Debug.Log($"【サーバー】クライアント({senderClientId})がベースライン計測完了。平均RTT: {avgRtt:F2}ms, 推定下り遅延: {estDownstreamLatency:F2}ms");
     }
 
-    public WritableData GetWritableUpstreamLatency()
+    [ClientRpc]
+    public void SaveLatencyClientRpc()
+    {
+        // クライアント側で遅延データを保存する処理を呼び出す
+        _resultWriter.WriteResultsToCSV(GetWritableUpstreamLatency(), "UpstreamLatency");
+        _resultWriter.WriteResultsToCSV(GetWritableBaselineLatency(), "BaselineLatency");
+    }
+
+    private WritableData GetWritableUpstreamLatency()
     {
         var writable = new WritableData(new List<string> { "UpstreamLatency" }, new List<List<string>>());
         foreach (var latency in _latencyMeasurements)
@@ -151,7 +168,7 @@ public class UpstreamLatencyMeasurer : NetworkBehaviour
         return writable;
     }
 
-    public WritableData GetWritableBaselineLatency()
+    private WritableData GetWritableBaselineLatency()
     {
         var writable = new WritableData(new List<string> { "AverageRTT", "EstimatedDownstreamLatency" }, new List<List<string>>());
         writable.AddData(new List<string> { _averageBaselineRtt.ToString(), _estimatedDownstreamLatency.ToString() });
