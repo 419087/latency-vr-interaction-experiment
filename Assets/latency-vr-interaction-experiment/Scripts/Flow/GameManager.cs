@@ -57,10 +57,8 @@ public class GameManager : MonoBehaviour
         _upstreamLatencyMeasurer.StopMeasureUpstreamLatencyClientRpc();
 
         var writableTaskResult = _resultCounter.GetWritableTaskResult();
-        var writableUpstreamLatency = _upstreamLatencyMeasurer.GetWritableUpstreamLatency();
-        var writableBaseLineLatency = _upstreamLatencyMeasurer.GetWritableBaselineLatency();
         _resultWriter.WriteResultsToCSV(writableTaskResult, "TaskResult");
-        _resultWriter.WriteResultsToCSV(writableUpstreamLatency, "UpstreamLatency");
-        _resultWriter.WriteResultsToCSV(writableBaseLineLatency, "BaselineLatency");
+
+        _upstreamLatencyMeasurer.SaveLatencyClientRpc();
     }
 }
