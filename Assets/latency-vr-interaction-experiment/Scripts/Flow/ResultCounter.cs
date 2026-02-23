@@ -31,6 +31,7 @@ public class ResultCounter
         {
             writable.AddData(new List<string> { _taskHands[i], _taskTimes[i].ToString() });
         }
+        
         return writable;
     }
 }

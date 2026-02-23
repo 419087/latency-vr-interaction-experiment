@@ -7,8 +7,8 @@ public class PlayerInitialPositionSetter : MonoBehaviour
 {
     private EntryConfig _entryConfig;
     private Dictionary<int, Vector3> _initialPosition = new Dictionary<int, Vector3>{ 
-        { 0, new Vector3(1, 0, 0) },
-        { 1, new Vector3(-1, 0, 0) } 
+        { 0, new Vector3(0.1f, 0, 0) },
+        { 1, new Vector3(-0.1f, 0, 0) } 
     };
 
     [Inject]

@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 public class TmpTaskExcuter: ITaskExcuter
 {
     private readonly NetworkTaskMediator _networkTaskMediator;
+    private readonly ResultCounter _resultManager;
 
-    public TmpTaskExcuter(NetworkTaskMediator networkTaskMediator)
+    public TmpTaskExcuter(NetworkTaskMediator networkTaskMediator, ResultCounter resultManager)
     {
         _networkTaskMediator = networkTaskMediator;
+        _resultManager = resultManager;
     }
 
     public async UniTask ExecuteTask(HandSide handSide)
@@ -19,6 +21,7 @@ public class TmpTaskExcuter: ITaskExcuter
         _networkTaskMediator.ShowHandSideTextClientRpc(handSide);
 
         await UniTask.Delay(1000); // 例: 1秒待機するタスク
+        _resultManager.AddTaskTime(1000);
         
         _networkTaskMediator.HideAllTextClientRpc();
     }
