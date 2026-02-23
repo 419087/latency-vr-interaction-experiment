@@ -57,8 +57,9 @@ public class GameManager : MonoBehaviour
         _upstreamLatencyMeasurer.StopMeasureUpstreamLatencyClientRpc();
 
         var writableTaskResult = _resultCounter.GetWritableTaskResult();
-        _resultWriter.WriteResultsToCSV(writableTaskResult, "TaskResult");
+        
+        _resultWriter.WriteResultsToCSV(writableTaskResult, "TaskResult", _playerData.GetParticipantId(0).GetValueOrDefault(-1), _playerData.GetParticipantId(1).GetValueOrDefault(-1), _playerData.LatencyCondition);
 
-        _upstreamLatencyMeasurer.SaveLatencyClientRpc();
+        _upstreamLatencyMeasurer.SaveLatencyClientRpc(_playerData.GetParticipantId(0).GetValueOrDefault(-1), _playerData.GetParticipantId(1).GetValueOrDefault(-1), _playerData.LatencyCondition);
     }
 }
