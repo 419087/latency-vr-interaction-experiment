@@ -34,8 +34,10 @@ public class UpstreamLatencyMeasurer : NetworkBehaviour
         _resultWriter = resultWriter;
     }
 
-    private void Start()
+    public override void OnNetworkSpawn()
     {
+        Debug.Log("UpstreamLatencyMeasurerが起動しました");
+        Debug.Log($"IsClient: {IsClient}, IsServer: {IsServer}");
         if (!IsClient) return;
         
         Debug.Log("【クライアント】ベースライン計測を開始します...");
@@ -86,8 +88,8 @@ public class UpstreamLatencyMeasurer : NetworkBehaviour
         PingServerRpc(sendTime);
     }
 
-    [ServerRpc]
-    private void PingServerRpc(double clientSendTime, ServerRpcParams rpcParams = default)
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void PingServerRpc(double clientSendTime, RpcParams rpcParams = default)
     {
         // サーバーは受け取った時刻をそのままクライアントに送り返す
         // 送信元のクライアントにだけClientRpcを飛ばす設定
@@ -142,8 +144,8 @@ public class UpstreamLatencyMeasurer : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
-    private void ReportBaselineCompleteServerRpc(double avgRtt, double estDownstreamLatency, ServerRpcParams rpcParams = default)
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void ReportBaselineCompleteServerRpc(double avgRtt, double estDownstreamLatency, RpcParams rpcParams = default)
     {
         ulong senderClientId = rpcParams.Receive.SenderClientId;
         Debug.Log($"【サーバー】クライアント({senderClientId})がベースライン計測完了。平均RTT: {avgRtt:F2}ms, 推定下り遅延: {estDownstreamLatency:F2}ms");
@@ -164,6 +166,7 @@ public class UpstreamLatencyMeasurer : NetworkBehaviour
         {
             writable.AddData(new List<string> { latency.ToString() });
         }
+        Debug.Log(writable.Data[0][0]);
 
         return writable;
     }
@@ -172,6 +175,7 @@ public class UpstreamLatencyMeasurer : NetworkBehaviour
     {
         var writable = new WritableData(new List<string> { "AverageRTT", "EstimatedDownstreamLatency" }, new List<List<string>>());
         writable.AddData(new List<string> { _averageBaselineRtt.ToString(), _estimatedDownstreamLatency.ToString() });
+        Debug.Log(writable.Data[0][0]);
         return writable;
     }
 }
