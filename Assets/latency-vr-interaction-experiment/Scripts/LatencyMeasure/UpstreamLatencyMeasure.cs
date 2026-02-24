@@ -140,7 +140,7 @@ public class UpstreamLatencyMeasurer : NetworkBehaviour
             // 本計測：今回計測したRTTから、固定された下り遅延を引いて上り遅延を算出
             double upstreamLatencyMs = rttMs - _estimatedDownstreamLatency;
 
-           _latencyMeasurements.Add(upstreamLatencyMs);
+           _latencyMeasurements.Add(rttMs);
         }
     }
 
