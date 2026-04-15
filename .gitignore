@@ -103,3 +103,7 @@ InitTestScene*.unity*
 !.vscode/extensions.json
 !.vscode/launch.json
 !.vscode/tasks.json
+
+# 自分で追加したもの
+Assets/DiverXSDK/
+Assets/VIVE/
