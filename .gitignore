@@ -106,4 +106,8 @@ InitTestScene*.unity*
 
 # 自分で追加したもの
 Assets/ContactGloveSDK/
+Assets/ContactGloveSDK.meta
 Assets/VIVE/
+Assets/VIVE.meta
+Assets/VIVEOpenXRInstaller.cs
+Assets/VIVEOpenXRInstaller.cs.meta
