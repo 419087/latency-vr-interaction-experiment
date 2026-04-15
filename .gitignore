@@ -105,5 +105,5 @@ InitTestScene*.unity*
 !.vscode/tasks.json
 
 # 自分で追加したもの
-Assets/DiverXSDK/
+Assets/ContactGloveSDK/
 Assets/VIVE/
