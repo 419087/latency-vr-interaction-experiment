@@ -188,7 +188,7 @@ MonoBehaviour:
   _playerPrefab: {fileID: 694353353183168293, guid: 86c3334eea6ec8d449c485d36b41c0b4, type: 3}
   _maxClients: 2
   _taskIterations: 10
-  _minTaskIntervalMilliSeconds: 5000
+  _minTaskIntervalMilliSeconds: 2000
   _maxTaskIntervalMilliSeconds: 5000
   _resultFilePath: C:\Users\kazuk\Desktop
 --- !u!1 &314139688 stripped
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_MaxConnectAttempts: 60
   m_DisconnectTimeoutMS: 30000
   ConnectionData:
-    Address: 192.168.1.1
+    Address: 127.0.0.1
     Port: 7777
     ServerListenAddress: 0.0.0.0
   DebugSimulator:
@@ -942,7 +942,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

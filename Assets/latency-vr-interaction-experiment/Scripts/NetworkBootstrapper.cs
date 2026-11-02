@@ -17,6 +17,7 @@ public class NetworkBootstrapper : IStartable
     private readonly EntryConfig _entryConfig;
     private readonly NetworkManager _networkManager;
     private readonly NetworkTaskMediator _networkTaskMediator;
+    private readonly UpstreamLatencyMeasurer _upstreamLatencyMeasurer;
     private readonly ConnectionManager _connectionManagerPrefab;
     private readonly GameManager _gameManagerPrefab;
     private readonly ServerCanvas _serverCanvasPrefab;
@@ -27,6 +28,7 @@ public class NetworkBootstrapper : IStartable
         EntryConfig entryConfig,
         NetworkManager networkManager,
         NetworkTaskMediator networkTaskMediator,
+        UpstreamLatencyMeasurer upstreamLatencyMeasurer,
         ConnectionManager connectionManagerPrefab,
         GameManager gameManagerPrefab,
         ServerCanvas serverCanvasPrefab,
@@ -36,6 +38,7 @@ public class NetworkBootstrapper : IStartable
         _entryConfig = entryConfig;
         _networkManager = networkManager;
         _networkTaskMediator = networkTaskMediator;
+        _upstreamLatencyMeasurer = upstreamLatencyMeasurer;
         _connectionManagerPrefab = connectionManagerPrefab;
         _gameManagerPrefab = gameManagerPrefab;
         _serverCanvasPrefab = serverCanvasPrefab;
@@ -64,6 +67,8 @@ public class NetworkBootstrapper : IStartable
 
         var taskStartButton = serverCanvasInstance.TaskStartButton;
         taskStartButton.Initialize(gameManagerInstance.GetComponent<GameManager>());
+
+        _upstreamLatencyMeasurer.InitializeAsServer(serverCanvasInstance.Client1Text, serverCanvasInstance.Client2Text);
 
         connectionManagerInstance.InitializeConnectionManager();
 

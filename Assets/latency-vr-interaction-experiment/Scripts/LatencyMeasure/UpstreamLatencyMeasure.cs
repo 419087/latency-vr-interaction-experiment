@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Netcode;
 using System.Collections.Generic;
 using VContainer;
+using TMPro;
 
 public class UpstreamLatencyMeasurer : NetworkBehaviour
 {
@@ -12,6 +13,9 @@ public class UpstreamLatencyMeasurer : NetworkBehaviour
         WaitingForEmulator,
         LatencyMeasuring
     }
+
+    private TMP_Text _client1Text;
+    private TMP_Text _client2Text;
 
     [Header("計測設定")]
     [SerializeField] private int _baselinePingCount = 100; // ベースラインを測る回数
@@ -32,6 +36,13 @@ public class UpstreamLatencyMeasurer : NetworkBehaviour
     public void Construct(ResultWriter resultWriter)
     {
         _resultWriter = resultWriter;
+    }
+
+    // サーバー側で遅延を表示するテキストを設定する
+    public void InitializeAsServer(TMP_Text client1Text, TMP_Text client2Text)
+    {
+        _client1Text = client1Text;
+        _client2Text = client2Text;
     }
 
     public override void OnNetworkSpawn()
@@ -141,7 +152,25 @@ public class UpstreamLatencyMeasurer : NetworkBehaviour
             double upstreamLatencyMs = rttMs - _estimatedDownstreamLatency;
 
            _latencyMeasurements.Add(rttMs);
+
+            // サーバーに計測した往復遅延を報告
+            ReportLatencyServerRpc(rttMs);
         }
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void ReportLatencyServerRpc(double rttMs, RpcParams rpcParams = default)
+    {
+        ulong senderClientId = rpcParams.Receive.SenderClientId;
+        if (senderClientId == 1)
+        {
+            _client1Text.text = $"Client1 RTT: {rttMs:F2}ms";
+        }
+        else if (senderClientId == 2)
+        {
+            _client2Text.text = $"Client2 RTT: {rttMs:F2}ms";
+        }
+        // Debug.Log($"【サーバー】クライアント({senderClientId})の往復遅延: {rttMs:F2}ms");
     }
 
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
